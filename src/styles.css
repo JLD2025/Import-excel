@@ -3,6 +3,13 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.dynamic-background {
+    background-image: url('https://i.pinimg.com/originals/a7/37/e1/a737e1a3422af26b58da3099cc3baccf.jpg'); /* Imagen de fondo predeterminada */
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Para que ocupe toda la altura de la ventana */
+  }
+
 .title{
     font-size: 45px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;

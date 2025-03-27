@@ -1,28 +1,30 @@
+<div [ngClass]="dynamicBackground">
 
+  <p class="title">BIENVENIDO A MI PROGRAMA EN ANGULAR.JS</p>
+  <p class="subtitle">IMPORTACIÓN DE EXCELS Y SU CONSIGUIENTE VISUALIZACIÓN</p>
 
-<p class="title">BIENVENIDO A MI PROGRAMA EN ANGULAR.JS</p>
-<p class="subtitle">IMPORTACIÓN DE EXCELS Y SU CONSIGUIENTE VISUALIZACIÓN</p>
+  <p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
 
-<p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
+  <input type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
-<input type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
+  <p class="message" *ngIf="excelData.length === 0">No hay datos disponibles</p>
 
-<p class="message" *ngIf="excelData.length === 0">No hay datos disponibles</p>
+  <div *ngIf="sheetNames.length > 0" class="style">
+    <ul class="horizontal">
+      <li *ngFor="let sheetName of sheetNames; let i = index">
+        <button (click)="loadSheet(i)">
+          {{ sheetName }}
+        </button>
+      </li>
+    </ul>
+  </div>
 
-<div *ngIf="sheetNames.length > 0" class="style">
-  <ul class="horizontal">
-    <li *ngFor="let sheetName of sheetNames; let i = index">
-      <button (click)="loadSheet(i)">
-        {{ sheetName }}
-      </button>
-    </li>
-  </ul>
-</div>
-
-<div style="overflow-x: auto; max-width: 100%;">
-  <table *ngIf="excelData.length > 0" class="styles">
-    <tr *ngFor="let row of excelData">
-      <td *ngFor="let cell of row">{{ cell }}</td>
-    </tr>
-  </table>
+  <div style="overflow-x: auto; max-width: 100%;">
+    <table *ngIf="excelData.length > 0" class="styles">
+      <tr *ngFor="let row of excelData">
+        <td *ngFor="let cell of row">{{ cell }}</td>
+      </tr>
+    </table>
+  </div>
+  
 </div>

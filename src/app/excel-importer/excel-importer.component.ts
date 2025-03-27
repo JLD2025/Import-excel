@@ -18,6 +18,8 @@ export class ExcelImporterComponent implements OnInit {
   workbook: XLSX.WorkBook | null = null; // Almacena el workbook
   currentDate: string = '';
 
+  dynamicBackground: string = 'dynamic-background';
+
   ngOnInit() {
     this.updateTime();
   }
