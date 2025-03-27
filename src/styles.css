@@ -39,16 +39,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .style{
     margin: 20px 0 0 0;
     padding: 5px;
-    width: 590px;
+    display: flex;
+    flex-wrap: wrap;
     background-color: lightyellow;
-    border-radius: 10%;
     border: 2px solid black;
+    justify-content: center;
 }
 
 .style button {
-    width: 100px;
+    width: 140px;
     margin: 10px;
-    border-radius: 20%;
+    padding: 5px;
+    border-radius: 40%;
     cursor: pointer;
     transition: transform 0.1s;
     background-color: lightgrey;

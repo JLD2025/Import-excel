@@ -12,7 +12,7 @@
   </ul>
 </div>
 
-<table  *ngIf="excelData.length > 0" class="styles">
+<table *ngIf="excelData.length > 0" class="styles">
     <tr *ngFor="let row of excelData">
       <td *ngFor="let cell of row">{{ cell }}</td>
     </tr>
