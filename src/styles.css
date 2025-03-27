@@ -3,6 +3,27 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.title{
+    font-size: 45px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    color: #f70303dd;
+    text-align: center;
+}
+
+.subtitle{
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 100;
+    color: black;
+    text-align: center;
+}
+
+input{
+    display: block;
+    margin: 0 auto;
+}
+
 .styles { 
     margin: 30px auto; /* Centra la tabla horizontalmente y le da margen */
     border-collapse: separate; /* Elimina el espacio entre celdas */
