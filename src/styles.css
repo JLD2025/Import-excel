@@ -4,24 +4,24 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .styles { 
-    margin: 30px auto;        /* Centra la tabla horizontalmente y le da margen */
+    margin: 30px auto; /* Centra la tabla horizontalmente y le da margen */
     border-collapse: separate; /* Elimina el espacio entre celdas */
     border-spacing: 2px;
     background-color: #f4f4f4; /* Fondo de la tabla */
-    text-align: center;       /* Centra el texto dentro de las celdas */
-    width: 80%;                   /* Establece el ancho de la tabla */
+    text-align: center; /* Centra el texto dentro de las celdas */
+    width: 80%; /* Establece el ancho de la tabla */
     max-width: 1000px; 
     border: 2px solid #333; 
 }
   
 .styles th, .styles td {
-    border: 1px solid black;   /* Agrega bordes grises a las celdas */
-    padding: 10px;            /* Relleno dentro de las celdas */
+    border: 1px solid black; /* Agrega bordes grises a las celdas */
+    padding: 10px; /* Relleno dentro de las celdas */
 }
   
 .styles tr:first-child {
     background-color: #000000; /* Color de fondo para los encabezados */
-    color: green;              /* Color de texto para los encabezados */
+    color: green; /* Color de texto para los encabezados */
 }
   
 .styles tr:nth-child(even) {
@@ -29,6 +29,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
   
 .styles tr:not(:first-child):hover {
-    background-color: #f70303dd;    /* Fondo cuando se pasa el ratón por encima de la fila */
+    background-color: #f70303dd; /* Fondo cuando se pasa el ratón por encima de la fila */
 }
   
