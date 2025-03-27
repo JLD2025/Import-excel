@@ -43,4 +43,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 20%;
     border: 2px solid black;
 }
+
+.style button {
+    width: 100px;
+    margin: 10px;
+    border-radius: 20%;
+}
+
+.style button:hover {
+    background: lightgreen;
+}
   
