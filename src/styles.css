@@ -7,7 +7,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-image: url('https://i.pinimg.com/originals/a7/37/e1/a737e1a3422af26b58da3099cc3baccf.jpg'); /* Imagen de fondo predeterminada */
     background-size: cover;
     background-position: center;
-    height: 100vh; /* Para que ocupe toda la altura de la ventana */
+    height: 100vh;
   }
 
 .title{
@@ -38,29 +38,27 @@ input{
     text-align: center;
 }
 
-table{
-    font-size: 12px;
-    width: 100% ;
-}
-
 .styles { 
-    margin: 20px 0 0; /* Centra la tabla horizontalmente y le da margen */
+    margin: 20px 0 0 0; /* Centra la tabla horizontalmente y le da margen */
     border-collapse: collapse; /* Elimina el espacio entre celdas */
     border-spacing: 2px;
     background-color: #f4f4f4; /* Fondo de la tabla */
     text-align: center; /* Centra el texto dentro de las celdas */
-    border: 2px solid #333; 
+    font-size: 3.5px;
+    width: 100%;
+}
+
+table {
+    width: 100%; /* Hace que la tabla ocupe todo el ancho disponible */
+    table-layout: fixed;
 }
   
 .styles td {
     border: 1px solid blue; /* Agrega bordes grises a las celdas */
-    padding: 10px; /* Relleno dentro de las celdas */
-    font-size: 14px;
 }
 
 .styles td:empty {
     border: 1px solid blue; /* Agrega bordes grises a las celdas */
-    padding: 10px; /* Relleno dentro de las celdas */
 }
   
 .styles tr:first-child {
@@ -79,7 +77,6 @@ table{
 
 .style{
     margin: 20px 0 0 0;
-    padding: 5px;
     display: flex;
     flex-wrap: wrap;
     background-color: lightyellow;
