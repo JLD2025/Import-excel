@@ -24,8 +24,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
   
 .styles tr:first-child {
-    background-color: #000000; /* Color de fondo para los encabezados */
-    color: green; /* Color de texto para los encabezados */
+    background-color: black; /* Color de fondo para los encabezados */
+    color: white; /* Color de texto para los encabezados */
 }
   
 .styles tr:nth-child(even) {
@@ -34,5 +34,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   
 .styles tr:not(:first-child):hover {
     background-color: #f70303dd; /* Fondo cuando se pasa el ratón por encima de la fila */
+}
+
+.style{
+    margin: 20px 0 0 0;
+    width: 250px;
+    background-color: lightyellow;
+    border-radius: 20%;
+    border: 2px solid black;
 }
   

@@ -2,7 +2,7 @@
 
 <input type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
-<div *ngIf="sheetNames.length > 0">
+<div *ngIf="sheetNames.length > 0" class="style">
   <ul>
     <li *ngFor="let sheetName of sheetNames; let i = index">
       <button (click)="loadSheet(i)">
