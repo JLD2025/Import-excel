@@ -3,6 +3,8 @@
 
 <input type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
+<p *ngIf="excelData.length === 0">No hay datos disponibles</p>
+
 <div *ngIf="sheetNames.length > 0" class="style">
   <ul class="horizontal">
     <li *ngFor="let sheetName of sheetNames; let i = index">
@@ -13,10 +15,10 @@
   </ul>
 </div>
 
-<table *ngIf="excelData.length > 0" class="styles">
+<div style="overflow-x: auto; max-width: 100%;">
+  <table *ngIf="excelData.length > 0" class="styles">
     <tr *ngFor="let row of excelData">
       <td *ngFor="let cell of row">{{ cell }}</td>
     </tr>
-</table>
-
-<p *ngIf="excelData.length === 0">No hay datos disponibles</p>
+  </table>
+</div>

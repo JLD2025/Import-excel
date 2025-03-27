@@ -24,9 +24,14 @@ input{
     margin: 0 auto;
 }
 
+table{
+    font-size: 12px;
+    width: 100% ;
+}
+
 .styles { 
-    margin: 30px auto; /* Centra la tabla horizontalmente y le da margen */
-    border-collapse: separate; /* Elimina el espacio entre celdas */
+    margin: 20px 0 0; /* Centra la tabla horizontalmente y le da margen */
+    border-collapse: collapse; /* Elimina el espacio entre celdas */
     border-spacing: 2px;
     background-color: #f4f4f4; /* Fondo de la tabla */
     text-align: center; /* Centra el texto dentro de las celdas */
