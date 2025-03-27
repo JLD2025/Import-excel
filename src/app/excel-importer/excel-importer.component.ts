@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'
 import { CommonModule } from '@angular/common';
 
@@ -10,12 +10,30 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./excel-importer.component.css']
 })
 
-export class ExcelImporterComponent {
+export class ExcelImporterComponent implements OnInit {
   excelData: any[] = []; //Sirve par almacenar los datos
   sheetNames: string[] = []; //Sirve para almacenar los diferentes nombres de las hojas que contiene un excel en particular.
   selectedSheetIndex: number = 0; //Indice de la hoja seleccionada de un excel.
 
   workbook: XLSX.WorkBook | null = null; // Almacena el workbook
+  currentDate: string = '';
+
+  ngOnInit() {
+    this.updateTime();
+  }
+
+  updateTime(){
+    this.getCurrentDate();
+    if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
+      window.requestAnimationFrame(() => this.updateTime()); // Llama de nuevo si estamos en un navegador
+    }
+  }
+
+  // Función para obtener la fecha y hora actuales
+  getCurrentDate() {
+    const ahora = new Date();
+    this.currentDate = ahora.toLocaleString('es-ES');
+  }
 
   onFileChange(event: any) {
     const file = event.target.files[0];

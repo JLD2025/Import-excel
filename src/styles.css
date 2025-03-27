@@ -24,6 +24,13 @@ input{
     margin: 0 auto;
 }
 
+.message{
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
 table{
     font-size: 12px;
     width: 100% ;
@@ -60,6 +67,7 @@ table{
   
 .styles tr:not(:first-child):hover {
     background-color: #f70303dd; /* Fondo cuando se pasa el ratón por encima de la fila */
+    font-weight: bold;
 }
 
 .style{
