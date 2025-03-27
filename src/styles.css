@@ -9,13 +9,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-spacing: 2px;
     background-color: #f4f4f4; /* Fondo de la tabla */
     text-align: center; /* Centra el texto dentro de las celdas */
-    width: 80%; /* Establece el ancho de la tabla */
-    max-width: 1000px; 
     border: 2px solid #333; 
 }
   
-.styles th, .styles td {
-    border: 1px solid black; /* Agrega bordes grises a las celdas */
+.styles td {
+    border: 1px solid blue; /* Agrega bordes grises a las celdas */
+    padding: 10px; /* Relleno dentro de las celdas */
+    font-size: 14px;
+}
+
+.styles td:empty {
+    border: 1px solid blue; /* Agrega bordes grises a las celdas */
     padding: 10px; /* Relleno dentro de las celdas */
 }
   

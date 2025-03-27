@@ -9,28 +9,56 @@ import { CommonModule } from '@angular/common';
   templateUrl: './excel-importer.component.html',
   styleUrls: ['./excel-importer.component.css']
 })
+
 export class ExcelImporterComponent {
-  excelData: any[] = [];
+  excelData: any[] = []; //Sirve par almacenar los datos
+  sheetNames: string[] = []; //Sirve para almacenar los diferentes nombres de las hojas que contiene un excel en particular.
+  selectedSheetIndex: number = 0; //Indice de la hoja seleccionada de un excel.
+
+  workbook: XLSX.WorkBook | null = null; // Almacena el workbook
 
   onFileChange(event: any) {
-    const target: DataTransfer = <DataTransfer>event.target;
-    if (target.files.length !== 1) return;
+    const file = event.target.files[0];
+    if (!file) return;
 
-    const file = target.files[0];
     const reader: FileReader = new FileReader();
 
     reader.onload = (e: any) => {
       const arrayBuffer: ArrayBuffer = e.target.result;
-      const workbook: XLSX.WorkBook = XLSX.read(arrayBuffer, { type: 'array' });
+      this.workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
+      this.sheetNames = this.workbook.SheetNames; //Esta parte sirve para obtener los nombres de las hojas por la cuál se compone un excel.
+
+      if(this.sheetNames.length > 0){
+        this.loadSheet(0); //Empezar por la primera hoja por defecto
+      }
+
+      /* Leer la primera hoja de un excel
       const sheetName: string = workbook.SheetNames[0];
       const sheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
 
       // Convierte la hoja a JSON, usando las cabeceras como la primera fila
       this.excelData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      */
+     
     };
 
     // Cambié a 'readAsArrayBuffer'
     reader.readAsArrayBuffer(file);
+  }
+
+  loadSheet(index: number) : void {
+    if(this.workbook){
+
+      this.selectedSheetIndex = index;
+      const sheetName: string = this.sheetNames[index];
+      const sheet: XLSX.WorkSheet = this.workbook.Sheets[sheetName];
+
+      if(sheet){
+        this.excelData = XLSX.utils.sheet_to_json(sheet, {header : 1});
+      }
+
+    }
+
   }
 }

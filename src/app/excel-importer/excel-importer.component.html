@@ -1,6 +1,17 @@
 <p>BIENVENIDO A MI PROGRAMA EN ANGULAR.JS</p>
 
 <input type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
+
+<div *ngIf="sheetNames.length > 0">
+  <ul>
+    <li *ngFor="let sheetName of sheetNames; let i = index">
+      <button (click)="loadSheet(i)">
+        {{ sheetName }}
+      </button>
+    </li>
+  </ul>
+</div>
+
 <table  *ngIf="excelData.length > 0" class="styles">
     <tr *ngFor="let row of excelData">
       <td *ngFor="let cell of row">{{ cell }}</td>
