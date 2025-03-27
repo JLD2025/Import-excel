@@ -1,0 +1,10 @@
+<p>BIENVENIDO A MI PROGRAMA EN ANGULAR.JS</p>
+
+<input type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
+<table  *ngIf="excelData.length > 0" class="styles">
+    <tr *ngFor="let row of excelData">
+      <td *ngFor="let cell of row">{{ cell }}</td>
+    </tr>
+</table>
+
+<p *ngIf="excelData.length === 0">No hay datos disponibles</p>
