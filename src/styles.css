@@ -34,6 +34,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
 }
 
+.input1{
+    width: 270px;
+    text-align: center;
+}
+
 .message{
     color: black;
     font-weight: bold;
