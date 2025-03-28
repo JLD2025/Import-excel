@@ -22,11 +22,15 @@
   <div class="styles">
     <div class="table-container">
       <table *ngIf="excelData.length > 0">
-        <tr *ngFor="let row of excelData">
-          <td *ngFor="let cell of row">{{ cell }}</td>
+        <tr *ngFor="let row of excelData; let rowIndex = index">
+          <td *ngFor="let cell of row; let colIndex = index">
+            <input [(ngModel)]="excelData[rowIndex][colIndex]" type="text"/>
+          </td>
         </tr>
       </table>
     </div>
-  </div>  
+  </div>
+  
+  <button (click)="exportToExcel()">Guardar Cambios</button>
   
 </div>

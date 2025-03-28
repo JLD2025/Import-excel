@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-excel-importer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './excel-importer.component.html',
   styleUrls: ['./excel-importer.component.css']
 })
@@ -81,4 +82,13 @@ export class ExcelImporterComponent implements OnInit {
     }
 
   }
+
+  exportToExcel() {
+    const worksheet = XLSX.utils.aoa_to_sheet(this.excelData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos Editados');
+
+    XLSX.writeFile(workbook, 'Datos_Modificados.xlsx');
+  }
+
 }
