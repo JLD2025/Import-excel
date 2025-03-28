@@ -6,7 +6,7 @@
   <p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
   <button (click)="exportToExcel()">Guardar Cambios</button>
 
-  <input type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
+  <input class="input_xlsx" type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
   <p class="message" *ngIf="excelData.length === 0">No hay datos disponibles</p>
 
@@ -20,7 +20,8 @@
     </ul>
   </div>
 
-  <input type="text" [(ngModel)]="selectedCellValue" (ngModelChange)="UpdateCell()" placeholder="Selecciona una celda" />
+  <p>Celda seleccionada:</p>
+  <input class="input1" type="text" [(ngModel)]="selectedCellValue" (ngModelChange)="UpdateCell()" placeholder="Selecciona una celda" />
 
   <div class="styles">
     <div class="table-container">

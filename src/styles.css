@@ -26,7 +26,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
 }
 
-input{
+.input_xlsx{
     display: block;
     margin: 20px auto;
     width: 700px;
