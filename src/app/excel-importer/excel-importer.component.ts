@@ -88,7 +88,7 @@ export class ExcelImporterComponent implements OnInit {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos Editados');
 
-    XLSX.writeFile(workbook, 'Datos_Modificados.xlsx');
+    XLSX.writeFile(workbook, `${this.sheetNames}Datos_Modificados.xlsx`);
   }
 
 }

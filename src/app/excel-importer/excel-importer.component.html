@@ -4,6 +4,7 @@
   <p class="subtitle">IMPORTACIÓN DE EXCELS Y SU CONSIGUIENTE VISUALIZACIÓN</p>
 
   <p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
+  <button (click)="exportToExcel()">Guardar Cambios</button>
 
   <input type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
@@ -30,7 +31,5 @@
       </table>
     </div>
   </div>
-  
-  <button (click)="exportToExcel()">Guardar Cambios</button>
   
 </div>
