@@ -26,12 +26,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
 }
 
-.input_xlsx{
-    display: block;
-    margin: 20px auto;
+.input_xlsx {
+    display: block;                  /* Utilizamos flexbox para centrar */
+    margin: auto;
     width: 700px;
-    height: 20px;
-    text-align: center;
+    height: 20px;                  /* Ajustamos la altura del contenedor */
+    border: 1px solid black;        /* Borde negro */
+    border-radius: 10px;            /* Bordes redondeados */
+    padding: 10px;
 }
 
 .input1{
@@ -124,6 +126,6 @@ table {
 }
 
 .horizontal li{
-    margin-right: 20px;
+    margin-right: 50px;
 }
   
