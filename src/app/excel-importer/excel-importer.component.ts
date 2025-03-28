@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-excel-importer',
@@ -22,6 +23,10 @@ export class ExcelImporterComponent implements OnInit {
   dynamicBackground: string = 'dynamic-background';
 
   selectedCellValue: string = '';
+  selectedRow: number | null = null;
+  selectedCol: number | null = null;
+
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.updateTime();
@@ -94,7 +99,16 @@ export class ExcelImporterComponent implements OnInit {
   }
 
   selectCell(rowIndex: number, colIndex: number) {
+    this.selectedRow = rowIndex;
+    this.selectedCol = colIndex;
     this.selectedCellValue = this.excelData[rowIndex][colIndex];
+  }
+
+  UpdateCell() {
+    if (this.selectedRow !== null && this.selectedCol !== null) {
+      this.excelData[this.selectedRow][this.selectedCol] = this.selectedCellValue;
+      this.cd.detectChanges();
+    }
   }
 
 }
