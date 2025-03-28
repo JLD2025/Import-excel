@@ -21,6 +21,8 @@ export class ExcelImporterComponent implements OnInit {
 
   dynamicBackground: string = 'dynamic-background';
 
+  selectedCellValue: string = '';
+
   ngOnInit() {
     this.updateTime();
   }
@@ -89,6 +91,10 @@ export class ExcelImporterComponent implements OnInit {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos Editados');
 
     XLSX.writeFile(workbook, `${this.sheetNames}Datos_Modificados.xlsx`);
+  }
+
+  selectCell(rowIndex: number, colIndex: number) {
+    this.selectedCellValue = this.excelData[rowIndex][colIndex];
   }
 
 }

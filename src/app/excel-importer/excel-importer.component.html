@@ -20,12 +20,14 @@
     </ul>
   </div>
 
+  <input type="text" [(ngModel)]="selectedCellValue" placeholder="Selecciona una celda" />
+
   <div class="styles">
     <div class="table-container">
       <table *ngIf="excelData.length > 0">
         <tr *ngFor="let row of excelData; let rowIndex = index">
-          <td *ngFor="let cell of row; let colIndex = index">
-            <input [(ngModel)]="excelData[rowIndex][colIndex]" type="text"/>
+          <td *ngFor="let cell of row; let colIndex = index" (click)="selectCell(rowIndex, colIndex)">
+           {{cell}}
           </td>
         </tr>
       </table>
