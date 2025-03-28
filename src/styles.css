@@ -44,17 +44,26 @@ input{
     border-spacing: 2px;
     background-color: #f4f4f4; /* Fondo de la tabla */
     text-align: center; /* Centra el texto dentro de las celdas */
-    font-size: 3.5px;
+    font-size: 1em;
     width: 100%;
+    overflow-x: auto;
+}
+
+/* Contenedor para la tabla que permite desplazamiento horizontal */
+.table-container {
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+    margin-top: 20px; /* Le da un pequeño margen superior */
 }
 
 table {
     width: 100%; /* Hace que la tabla ocupe todo el ancho disponible */
-    table-layout: fixed;
+    table-layout:auto;
 }
   
 .styles td {
     border: 1px solid blue; /* Agrega bordes grises a las celdas */
+    padding: 8px;
 }
 
 .styles td:empty {
