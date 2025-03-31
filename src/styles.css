@@ -51,49 +51,63 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
 }
 
+/* Estilo general para la tabla */
 .styles { 
-    margin: 20px 0 0 0; /* Centra la tabla horizontalmente y le da margen */
-    border-collapse: collapse; /* Elimina el espacio entre celdas */
-    border-spacing: 2px;
+    margin: 10px 0 0 0; /* Sin margen para aprovechar todo el espacio disponible */
     background-color: #f4f4f4; /* Fondo de la tabla */
     text-align: center; /* Centra el texto dentro de las celdas */
     font-size: 1em;
-    width: 100%;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 100vw; /* Asegura que no se desborde en pantallas más grandes */
+    box-sizing: border-box; /* Para asegurar que el padding no afecte el ancho */
 }
 
 /* Contenedor para la tabla que permite desplazamiento horizontal */
 .table-container {
-    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
-    margin-top: 20px; /* Le da un pequeño margen superior */
-    overflow-x: auto;
+    width: 100vw; /* Hace que el contenedor ocupe todo el ancho de la ventana */
+    height: 100vh; /* Hace que el contenedor ocupe todo el alto de la ventana */
+    overflow-x: auto; /* Permite desplazamiento horizontal cuando sea necesario */
+    overflow-y: auto; /* Permite desplazamiento vertical cuando sea necesario */
+    box-sizing: border-box;
 }
 
+/* Estilo para la tabla, haciéndola más flexible */
 table {
-    table-layout:auto;
-}
-  
-.styles td {
-    border: 1px solid blue; /* Agrega bordes grises a las celdas */
-    padding: 8px;
+    table-layout: auto; /* La tabla ajustará el tamaño de las celdas según el contenido */
+    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho disponible */
+    border-collapse: collapse; /* Quita el espacio entre celdas */
 }
 
-.styles td:empty {
+/* Estilo para las celdas */
+.styles td, .styles th {
     border: 1px solid blue; /* Agrega bordes grises a las celdas */
+    padding: 8px; /* Espaciado dentro de las celdas */
+    text-align: center; /* Alineación del texto */
 }
-  
+
+/* Cuando la celda está vacía, se muestra con borde */
+.styles td:empty {
+    border: 1px solid blue;
+}
+
+/* Estilo para la primera fila (encabezado) */
 .styles tr:first-child {
     background-color: black; /* Color de fondo para los encabezados */
     color: white; /* Color de texto para los encabezados */
 }
-  
+
+/* Fondo alternativo para las filas pares */
 .styles tr:nth-child(even) {
     background-color: #f2f2f2; /* Color de fondo alternativo para filas */
 }
-  
+
+/* Cambio de color de fondo y estilo al pasar el ratón por encima de las filas */
 .styles tr:not(:first-child):hover {
     background-color: lightsalmon; /* Fondo cuando se pasa el ratón por encima de la fila */
     font-weight: bold;
 }
+
+
 
 .style{
     margin: 20px 0 0 0;
