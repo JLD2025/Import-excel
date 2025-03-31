@@ -4,11 +4,13 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .dynamic-background {
-    background-image: url('https://i.pinimg.com/originals/a7/37/e1/a737e1a3422af26b58da3099cc3baccf.jpg'); /* Imagen de fondo predeterminada */
+    background-image: url('https://i.pinimg.com/originals/a7/37/e1/a737e1a3422af26b58da3099cc3baccf.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
-  }
+    width: 100vw;
+    overflow: hidden;
+}
 
 .title{
     font-size: 45px;
@@ -27,12 +29,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .input_xlsx {
-    display: block; /* Utilizamos flexbox para centrar */
+    display: block; 
     margin: auto;
     width: 700px;
-    height: 20px; /* Ajustamos la altura del contenedor */
-    border: 1px solid black; /* Borde negro */
-    border-radius: 10px; /* Bordes redondeados */
+    height: 20px; 
+    border: 1px solid black; 
+    border-radius: 10px;
     padding: 10px;
 }
 
@@ -51,59 +53,51 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
 }
 
-/* Estilo general para la tabla */
+
 .styles { 
-    margin: 10px 0 0 0; /* Sin margen para aprovechar todo el espacio disponible */
-    background-color: #f4f4f4; /* Fondo de la tabla */
-    text-align: center; /* Centra el texto dentro de las celdas */
+    margin: 10px 0 0 0;
+    background-color: #f4f4f4; 
+    text-align: center; 
     font-size: 1em;
-    width: 100%; /* Ocupa todo el ancho disponible */
-    max-width: 100vw; /* Asegura que no se desborde en pantallas más grandes */
-    box-sizing: border-box; /* Para asegurar que el padding no afecte el ancho */
+    box-sizing: border-box; 
 }
 
-/* Contenedor para la tabla que permite desplazamiento horizontal */
+
 .table-container {
-    width: 100vw; /* Hace que el contenedor ocupe todo el ancho de la ventana */
-    height: 100vh; /* Hace que el contenedor ocupe todo el alto de la ventana */
-    overflow-x: auto; /* Permite desplazamiento horizontal cuando sea necesario */
-    overflow-y: auto; /* Permite desplazamiento vertical cuando sea necesario */
-    box-sizing: border-box;
+    width: 99.9vw;
+    height: 75.5vh;
+    overflow-x: auto; 
+    overflow-y: auto;
+    border: 1px solid black; 
 }
 
-/* Estilo para la tabla, haciéndola más flexible */
+
 table {
-    table-layout: auto; /* La tabla ajustará el tamaño de las celdas según el contenido */
-    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho disponible */
-    border-collapse: collapse; /* Quita el espacio entre celdas */
+    table-layout: auto; 
+    border-collapse: collapse;
 }
 
-/* Estilo para las celdas */
+
 .styles td, .styles th {
-    border: 1px solid blue; /* Agrega bordes grises a las celdas */
-    padding: 8px; /* Espaciado dentro de las celdas */
-    text-align: center; /* Alineación del texto */
+    border: 1px solid blue; 
+    padding: 8px; 
+    text-align: center;
 }
 
-/* Cuando la celda está vacía, se muestra con borde */
+
 .styles td:empty {
     border: 1px solid blue;
 }
 
-/* Estilo para la primera fila (encabezado) */
+
 .styles tr:first-child {
-    background-color: black; /* Color de fondo para los encabezados */
-    color: white; /* Color de texto para los encabezados */
+    background-color: black; 
+    color: white; 
 }
 
-/* Fondo alternativo para las filas pares */
-.styles tr:nth-child(even) {
-    background-color: #f2f2f2; /* Color de fondo alternativo para filas */
-}
 
-/* Cambio de color de fondo y estilo al pasar el ratón por encima de las filas */
 .styles tr:not(:first-child):hover {
-    background-color: lightsalmon; /* Fondo cuando se pasa el ratón por encima de la fila */
+    background-color: lightsalmon;
     font-weight: bold;
 }
 
