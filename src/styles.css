@@ -27,18 +27,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .input_xlsx {
-    display: block;                  /* Utilizamos flexbox para centrar */
+    display: block; /* Utilizamos flexbox para centrar */
     margin: auto;
     width: 700px;
-    height: 20px;                  /* Ajustamos la altura del contenedor */
-    border: 1px solid black;        /* Borde negro */
-    border-radius: 10px;            /* Bordes redondeados */
+    height: 20px; /* Ajustamos la altura del contenedor */
+    border: 1px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
     padding: 10px;
 }
 
 .input1{
-    width: 270px;
+    width: 370px;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .message{
@@ -56,18 +59,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center; /* Centra el texto dentro de las celdas */
     font-size: 1em;
     width: 100%;
-    overflow-x: auto;
 }
 
 /* Contenedor para la tabla que permite desplazamiento horizontal */
 .table-container {
-    overflow-x: auto; /* Permite el desplazamiento horizontal */
     width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
     margin-top: 20px; /* Le da un pequeño margen superior */
+    overflow-x: auto;
 }
 
 table {
-    width: 100%; /* Hace que la tabla ocupe todo el ancho disponible */
     table-layout:auto;
 }
   
@@ -90,7 +91,7 @@ table {
 }
   
 .styles tr:not(:first-child):hover {
-    background-color: #f70303dd; /* Fondo cuando se pasa el ratón por encima de la fila */
+    background-color: lightsalmon; /* Fondo cuando se pasa el ratón por encima de la fila */
     font-weight: bold;
 }
 
