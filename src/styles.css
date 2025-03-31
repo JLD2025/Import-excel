@@ -62,18 +62,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     box-sizing: border-box; 
 }
 
-
 .table-container {
     width: 99.9vw;
-    height: 75.5vh;
+    height: 50.5vh; /* Ajustable */
     overflow-x: auto; 
     overflow-y: auto;
     border: 1px solid black; 
 }
 
-
 table {
-    table-layout: auto; 
+    width: 100%;
+    table-layout: auto; /* Mantiene columnas equilibradas */
     border-collapse: collapse;
 }
 
@@ -137,4 +136,3 @@ table {
 .horizontal li{
     margin-right: 50px;
 }
-  
