@@ -18,6 +18,7 @@ export class ExcelImporterComponent implements OnInit {
   selectedSheetIndex: number = 0; //Indice de la hoja seleccionada de un excel.
 
   workbook: XLSX.WorkBook | null = null; // Almacena el workbook
+  fileName: string = '';
   currentDate: string = '';
 
   dynamicBackground: string = 'dynamic-background';
@@ -49,6 +50,7 @@ export class ExcelImporterComponent implements OnInit {
     const file = event.target.files[0];
     if (!file) return;
 
+    this.fileName = file.name.split('.')[0];
     const reader: FileReader = new FileReader();
 
     reader.onload = (e: any) => {
@@ -95,7 +97,7 @@ export class ExcelImporterComponent implements OnInit {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos Editados');
 
-    XLSX.writeFile(workbook, `${this.sheetNames}Datos_Modificados.xlsx`);
+    XLSX.writeFile(workbook, `${this.fileName}_Datos_Modificados.xlsx`);
   }
 
   selectCell(rowIndex: number, colIndex: number) {
