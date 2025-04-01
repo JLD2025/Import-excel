@@ -62,14 +62,6 @@ export class ExcelImporterComponent implements OnInit {
       if(this.sheetNames.length > 0){
         this.loadSheet(0); //Empezar por la primera hoja por defecto
       }
-
-      /* Leer la primera hoja de un excel
-      const sheetName: string = workbook.SheetNames[0];
-      const sheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
-
-      // Convierte la hoja a JSON, usando las cabeceras como la primera fila
-      this.excelData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-      */
      
     };
 
