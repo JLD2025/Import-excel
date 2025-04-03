@@ -28,6 +28,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
 }
 
+.date-time, .boton{
+    margin-left: 10px;
+}
+
 .input_xlsx {
     display: block; 
     margin: auto;
