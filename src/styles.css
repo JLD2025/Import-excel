@@ -63,8 +63,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .table-container {
-    width: 99.9vw;
-    height: 50.5vh; /* Ajustable */
+    width: 100vw;
+    height: 54.5vh; /* Ajustable */
     overflow-x: auto; 
     overflow-y: auto;
     border: 1px solid black; 
@@ -103,7 +103,7 @@ table {
 
 
 .style{
-    margin: 20px 0 0 0;
+    margin: 10px 0 0 0;
     display: flex;
     flex-wrap: wrap;
     background-color: lightyellow;
@@ -113,7 +113,6 @@ table {
 
 .style button {
     width: 140px;
-    margin: 10px;
     padding: 5px;
     border-radius: 40%;
     cursor: pointer;
