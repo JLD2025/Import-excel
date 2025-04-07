@@ -124,7 +124,7 @@ export class ExcelImporterComponent implements OnInit {
   
     requiredHeaders.forEach(header => {
       if (!headers.includes(header)) {
-        errores.push(`Falta el encabezado "${header}" en la hoja de Excel.`);
+        errores.push(`No corresponde a este Excel. Botón inhabilitado`);
       }
     });
   
