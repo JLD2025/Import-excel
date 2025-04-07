@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-excel-importer',
@@ -28,8 +27,6 @@ export class ExcelImporterComponent implements OnInit {
   selectedCol: number | null = null;
 
   datos: any[] = [];
-
-  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.updateTime();
@@ -71,53 +68,35 @@ export class ExcelImporterComponent implements OnInit {
     reader.readAsArrayBuffer(file);
   }
 
-  loadSheet(index: number) : void {
-    if(this.workbook){
+  loadSheet(index: number): void {
+    if (this.workbook) {
       this.selectedSheetIndex = index;
       const sheetName: string = this.sheetNames[index];
       const sheet: XLSX.WorkSheet = this.workbook.Sheets[sheetName];
-      if(sheet){
-        this.excelData = XLSX.utils.sheet_to_json(sheet, {header : 1});
-
-        // Actualizar también el array datos con la información procesada
-        //this.processExcelData();
+      if (sheet) {
+        // Convertir la hoja a un array de objetos, donde la primera fila contiene los encabezados
+        this.excelData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        
+        // Obtener los encabezados de la primera fila
+        const headers: string[] = this.excelData[0];
+    
+        // Asignar los datos a this.datos, mapeando las filas usando los encabezados
+        this.datos = this.excelData.slice(1).map((row) => {
+          let rowData: any = {};
   
+          headers.forEach((header, index) => {
+            // Asignar directamente el valor usando los encabezados tal cual están
+            rowData[header] = row[index] !== undefined ? row[index] : null;
+          });
+  
+          return rowData;
+      });
+    
+        console.log("Datos cargados dinámicamente:", this.datos);
       }
     }
   }
-
-/*
-  processExcelData() {
-    // Asegurarse de que hay datos para procesar
-    if (this.excelData.length <= 1) {
-      this.datos = [];
-      return;
-    }
-    // Asumimos que la primera fila contiene los encabezados
-    const headers = this.excelData[0];
-    // Verificar que headers sea un array válido
-    if (!Array.isArray(headers)) {
-      this.datos = [];
-      return;
-    }
-    this.datos = this.excelData.slice(1).map(row => {
-      const item: any = {};
-      // Verificar que row sea un array válido
-      if (!Array.isArray(row)) {
-        return item;
-      }
-      // Iterar solo sobre headers válidos
-      for (let index = 0; index < headers.length; index++) {
-        const header = headers[index];
-        // Asegurarse de que el header es una cadena válida
-        if (header && typeof header === 'string') {
-          item[header] = index < row.length ? row[index] : null;
-        }
-      }
-      return item;
-    });
-  }
-  */
+  
 
   exportToExcel() {
     const worksheet = XLSX.utils.aoa_to_sheet(this.excelData);
@@ -127,47 +106,78 @@ export class ExcelImporterComponent implements OnInit {
     XLSX.writeFile(workbook, `${this.fileName}_Datos_Modificados.xlsx`);
   }
 
+
   revisarControlesIniciales() {
     let errores = [];
-    
-    // Revisar que todos tengan finca
-    const sinFinca = this.datos.filter(item => !item.finca);
-    if (sinFinca.length > 0) {
-      errores.push(`${sinFinca.length} registros sin finca asignada`);
+  
+    // Verificar que los datos han sido importados correctamente
+    if (!this.datos || this.datos.length === 0) {
+      this.mostrarErrores(["No se han importado datos."]);
+      return false;
     }
     
-    // Revisar registros de propiedad
-    const sinRegistroPropiedad = this.datos.filter(item => !item.registroPropiedad);
-    if (sinRegistroPropiedad.length > 0) {
-      errores.push(`${sinRegistroPropiedad.length} registros sin registro de propiedad`);
+    // Obtener los encabezados dinámicamente de los datos
+    const headers = Object.keys(this.datos[0]);
+  
+    // Verificar que los encabezados necesarios existan en los datos
+    const requiredHeaders = ['Nº Finca', 'Nº Registro', 'Código Postal'];
+  
+    requiredHeaders.forEach(header => {
+      if (!headers.includes(header)) {
+        errores.push(`Falta el encabezado "${header}" en la hoja de Excel.`);
+      }
+    });
+  
+    // Si los encabezados necesarios están presentes, revisar que los registros tengan valores válidos
+    if (!errores.length) {
+      const verificarCampo = (campo : string, nombreCampo : string) => {
+        return this.datos
+          .map((item, index) => (!item[campo] ? { fila: index + 1, columna: headers.indexOf(nombreCampo) + 1 } : null))
+          .filter(item => item !== null);
+      };
+      
+      // Verificar registros sin finca asignada
+      const sinFinca = verificarCampo('Nº Finca', 'Nº Finca');
+      if (sinFinca.length > 0) {
+        const detalles = sinFinca.map(item => `Fila: ${item.fila}, Columna: ${item.columna} (Nº Finca)`);
+        errores.push(`Registros sin finca asignada en las posiciones: ${detalles.join(', ')}`);
+      }
+      
+      // Verificar registros sin registro de propiedad
+      const sinRegistroPropiedad = verificarCampo('Nº Registro', 'Nº Registro');
+      if (sinRegistroPropiedad.length > 0) {
+        const detalles = sinRegistroPropiedad.map(item => `Fila: ${item.fila}, Columna: ${item.columna} (Nº Registro)`);
+        errores.push(`Registros sin registro de propiedad en las posiciones: ${detalles.join(', ')}`);
+      }
+      
+      // Verificar registros sin código postal
+      const sinCodigoPostal = verificarCampo('Código Postal', 'Código Postal');
+      if (sinCodigoPostal.length > 0) {
+        const detalles = sinCodigoPostal.map(item => `Fila: ${item.fila}, Columna: ${item.columna} (Código Postal)`);
+        errores.push(`Registros sin código postal en las posiciones: ${detalles.join(', ')}`);
+      }
+      
+
     }
-    
-    // Revisar código postal
-    const sinCodigoPostal = this.datos.filter(item => !item.codigoPostal);
-    if (sinCodigoPostal.length > 0) {
-      errores.push(`${sinCodigoPostal.length} registros sin código postal`);
-    }
-    
+  
+    // Si existen errores, mostrarlos
     if (errores.length > 0) {
       this.mostrarErrores(errores);
       return false;
     }
-    
+  
+    // Si todo está correcto, mostrar mensaje de éxito
     this.mostrarMensaje('Todos los controles iniciales son correctos');
     return true;
   }
   
-  // Métodos que faltaban para mostrar errores y mensajes
+  // Métodos para mostrar errores y mensajes
   mostrarErrores(errores: string[]) {
-    // Implementación del método para mostrar errores
-    console.error('Errores encontrados:', errores);
-    // Aquí podrías implementar la lógica para mostrar errores en la UI
+    alert('Errores encontrados:\n' + errores.join('\n'));
   }
   
   mostrarMensaje(mensaje: string) {
-    // Implementación del método para mostrar mensajes
-    console.log('Mensaje:', mensaje);
-    // Aquí podrías implementar la lógica para mostrar mensajes en la UI
+    alert(mensaje);
   }
-
+  
 }
