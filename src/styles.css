@@ -68,7 +68,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .table-container {
     width: 100vw;
-    height: 54.5vh; /* Ajustable */
+    height: 57.7vh; /* Ajustable */
     overflow-x: auto; 
     overflow-y: auto;
     border: 1px solid black; 
@@ -138,4 +138,40 @@ table {
 
 .horizontal li{
     margin-right: 50px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+  
+.boton {
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+  
+.boton i {
+    margin-right: 5px;
+}
+  
+.boton:hover {
+    background-color: #e0e0e0;
+}
+  
+.boton.primary {
+    background-color: #4CAF50;
+    color: white;
+}
+  
+.boton.primary:hover {
+    background-color: #45a049;
 }
