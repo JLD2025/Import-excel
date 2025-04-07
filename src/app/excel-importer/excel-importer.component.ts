@@ -119,14 +119,21 @@ export class ExcelImporterComponent implements OnInit {
     // Obtener los encabezados dinámicamente de los datos
     const headers = Object.keys(this.datos[0]);
   
-    // Verificar que los encabezados necesarios existan en los datos
     const requiredHeaders = ['Nº Finca', 'Nº Registro', 'Código Postal'];
-  
-    requiredHeaders.forEach(header => {
-      if (!headers.includes(header)) {
+
+    const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
+
+    if (missingHeaders.length > 0) {
+      if (missingHeaders.length === requiredHeaders.length) {
+        // Si faltan todos los encabezados, muestra solo un mensaje
         errores.push(`No corresponde a este Excel. Botón inhabilitado`);
+      } else {
+        // Si faltan solo algunos encabezados, muestra un mensaje por cada encabezado faltante
+        missingHeaders.forEach(header => {
+          errores.push(`Falta el encabezado: ${header}`);
+        });
       }
-    });
+    }
   
     // Si los encabezados necesarios están presentes, revisar que los registros tengan valores válidos
     if (!errores.length) {
