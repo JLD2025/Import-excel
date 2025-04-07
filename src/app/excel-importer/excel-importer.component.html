@@ -1,32 +1,31 @@
 <div [ngClass]="dynamicBackground">
 
   <p class="title">BIENVENIDO A MI PROGRAMA EN ANGULAR.JS</p>
-  <p class="subtitle">IMPORTACIÓN DE EXCELS Y SU CONSIGUIENTE VISUALIZACIÓN</p>
 
   <p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
 
   <div class="action-buttons">
     <button class="boton" (click)="exportToExcel()">Guardar Cambios</button>
     <button class="boton">
-      <i class="fa fa-check-circle"></i> 2. Revisión de controles
+      <i></i>Revisión de controles
     </button>
     <button class="boton">
-      <i class="fa fa-map-marker"></i> 3. Localizar municipio/provincia
+      <i></i>Localizar municipio/provincia
     </button>
     <button class="boton">
-      <i class="fa fa-search"></i> 4. Localizar registros
+      <i></i>Localizar registros
     </button>
     <button class="boton">
-      <i class="fa fa-history"></i> 5. Búsqueda de antecedentes
+      <i></i>Búsqueda de antecedentes
     </button>
     <button class="boton">
-      <i class="fa fa-building"></i> 6. Búsqueda tipos de bien
+      <i></i>Búsqueda tipos de bien
     </button>
     <button class="boton primary">
-      <i class="fa fa-file-text"></i> 7. Generar Encargo
+      <i></i>Generar Encargo
     </button>
     <button class="boton">
-      <i class="fa fa-copy"></i> 8. Copiar antecedentes
+      <i></i>Copiar antecedentes
     </button>
   </div>
 
@@ -44,13 +43,11 @@
     </ul>
   </div>
 
-  <input class="input1" type="text" [(ngModel)]="selectedCellValue" (ngModelChange)="UpdateCell()" placeholder="Selecciona una celda" />
-
   <div class="styles">
     <div class="table-container">
       <table *ngIf="excelData.length > 0">
         <tr *ngFor="let row of excelData; let rowIndex = index">
-          <td *ngFor="let cell of row; let colIndex = index" (click)="selectCell(rowIndex, colIndex)">
+          <td *ngFor="let cell of row; let colIndex = index">
            {{cell}}
           </td>
         </tr>

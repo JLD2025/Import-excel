@@ -20,14 +20,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
 }
 
-.subtitle{
-    font-size: 20px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: 100;
-    color: black;
-    text-align: center;
-}
-
 .date-time, .boton{
     margin-left: 10px;
 }
@@ -40,14 +32,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border: 1px solid black; 
     border-radius: 10px;
     padding: 10px;
-}
-
-.input1{
-    width: 370px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
 }
 
 .message{
@@ -68,7 +52,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .table-container {
     width: 100vw;
-    height: 57.7vh; /* Ajustable */
+    height: 63.5vh; /* Ajustable */
     overflow-x: auto; 
     overflow-y: auto;
     border: 1px solid black; 

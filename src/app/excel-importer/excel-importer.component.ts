@@ -27,6 +27,8 @@ export class ExcelImporterComponent implements OnInit {
   selectedRow: number | null = null;
   selectedCol: number | null = null;
 
+  datos: any[] = [];
+
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
@@ -71,18 +73,51 @@ export class ExcelImporterComponent implements OnInit {
 
   loadSheet(index: number) : void {
     if(this.workbook){
-
       this.selectedSheetIndex = index;
       const sheetName: string = this.sheetNames[index];
       const sheet: XLSX.WorkSheet = this.workbook.Sheets[sheetName];
-
       if(sheet){
         this.excelData = XLSX.utils.sheet_to_json(sheet, {header : 1});
+
+        // Actualizar también el array datos con la información procesada
+        //this.processExcelData();
+  
       }
-
     }
-
   }
+
+/*
+  processExcelData() {
+    // Asegurarse de que hay datos para procesar
+    if (this.excelData.length <= 1) {
+      this.datos = [];
+      return;
+    }
+    // Asumimos que la primera fila contiene los encabezados
+    const headers = this.excelData[0];
+    // Verificar que headers sea un array válido
+    if (!Array.isArray(headers)) {
+      this.datos = [];
+      return;
+    }
+    this.datos = this.excelData.slice(1).map(row => {
+      const item: any = {};
+      // Verificar que row sea un array válido
+      if (!Array.isArray(row)) {
+        return item;
+      }
+      // Iterar solo sobre headers válidos
+      for (let index = 0; index < headers.length; index++) {
+        const header = headers[index];
+        // Asegurarse de que el header es una cadena válida
+        if (header && typeof header === 'string') {
+          item[header] = index < row.length ? row[index] : null;
+        }
+      }
+      return item;
+    });
+  }
+  */
 
   exportToExcel() {
     const worksheet = XLSX.utils.aoa_to_sheet(this.excelData);
@@ -92,17 +127,47 @@ export class ExcelImporterComponent implements OnInit {
     XLSX.writeFile(workbook, `${this.fileName}_Datos_Modificados.xlsx`);
   }
 
-  selectCell(rowIndex: number, colIndex: number) {
-    this.selectedRow = rowIndex;
-    this.selectedCol = colIndex;
-    this.selectedCellValue = this.excelData[rowIndex][colIndex];
-  }
-
-  UpdateCell() {
-    if (this.selectedRow !== null && this.selectedCol !== null) {
-      this.excelData[this.selectedRow][this.selectedCol] = this.selectedCellValue;
-      this.cd.detectChanges();
+  revisarControlesIniciales() {
+    let errores = [];
+    
+    // Revisar que todos tengan finca
+    const sinFinca = this.datos.filter(item => !item.finca);
+    if (sinFinca.length > 0) {
+      errores.push(`${sinFinca.length} registros sin finca asignada`);
     }
+    
+    // Revisar registros de propiedad
+    const sinRegistroPropiedad = this.datos.filter(item => !item.registroPropiedad);
+    if (sinRegistroPropiedad.length > 0) {
+      errores.push(`${sinRegistroPropiedad.length} registros sin registro de propiedad`);
+    }
+    
+    // Revisar código postal
+    const sinCodigoPostal = this.datos.filter(item => !item.codigoPostal);
+    if (sinCodigoPostal.length > 0) {
+      errores.push(`${sinCodigoPostal.length} registros sin código postal`);
+    }
+    
+    if (errores.length > 0) {
+      this.mostrarErrores(errores);
+      return false;
+    }
+    
+    this.mostrarMensaje('Todos los controles iniciales son correctos');
+    return true;
+  }
+  
+  // Métodos que faltaban para mostrar errores y mensajes
+  mostrarErrores(errores: string[]) {
+    // Implementación del método para mostrar errores
+    console.error('Errores encontrados:', errores);
+    // Aquí podrías implementar la lógica para mostrar errores en la UI
+  }
+  
+  mostrarMensaje(mensaje: string) {
+    // Implementación del método para mostrar mensajes
+    console.log('Mensaje:', mensaje);
+    // Aquí podrías implementar la lógica para mostrar mensajes en la UI
   }
 
 }
