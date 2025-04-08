@@ -98,12 +98,29 @@ export class ExcelImporterComponent implements OnInit {
   }
   
 
+  loadDataFromExcelData(excelData: any[][]): void {
+    const headers: string[] = excelData[0];
+  
+    this.datos = excelData.slice(1).map((row) => {
+      let rowData: any = {};
+      headers.forEach((header, index) => {
+        rowData[header] = row[index] !== undefined ? row[index] : null;
+      });
+      return rowData;
+    });
+  
+    console.log("Datos actualizados desde el Excel modificado:", this.datos);
+  }
+  
+
   exportToExcel() {
     const worksheet = XLSX.utils.aoa_to_sheet(this.excelData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos Editados');
 
     XLSX.writeFile(workbook, `${this.fileName}_Datos_Modificados.xlsx`);
+
+    this.loadDataFromExcelData(this.excelData);
   }
 
 
@@ -184,7 +201,18 @@ export class ExcelImporterComponent implements OnInit {
   }
   
   mostrarMensaje(mensaje: string) {
-    alert(mensaje);
+    alert(`Mensaje: ${mensaje}`);
   }
+
+  onCellEdit(event: any, rowIndex: number, colIndex: number): void {
+    const newValue = event.target.innerText.trim();
+    // Verificar que el nuevo valor no esté vacío antes de asignarlo
+    if (newValue !== '') {
+      // Actualizar el valor en la celda correspondiente
+      this.excelData[rowIndex] = [...this.excelData[rowIndex]]; // Crear una nueva referencia para la fila
+      this.excelData[rowIndex][colIndex] = newValue;  // Actualizar la celda específica
+    }
+  }  
+  
   
 }

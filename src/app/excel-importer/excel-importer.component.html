@@ -1,6 +1,6 @@
 <div [ngClass]="dynamicBackground">
 
-  <p class="title">BIENVENIDO A MI PROGRAMA EN ANGULAR.JS</p>
+  <p class="title">BIENVENIDO A IMPORT-EXCEL</p>
 
   <p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
 
@@ -47,7 +47,7 @@
     <div class="table-container">
       <table *ngIf="excelData.length > 0">
         <tr *ngFor="let row of excelData; let rowIndex = index">
-          <td *ngFor="let cell of row; let colIndex = index">
+          <td *ngFor="let cell of row; let colIndex = index" contenteditable="true" (blur)="onCellEdit($event, rowIndex, colIndex)">
            {{cell}}
           </td>
         </tr>
