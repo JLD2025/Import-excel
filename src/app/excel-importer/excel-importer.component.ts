@@ -28,6 +28,20 @@ export class ExcelImporterComponent implements OnInit {
 
   datos: any[] = [];
 
+  mostrarBuscador: boolean = false;
+  provinciaSeleccionada: string = '';
+  municipioIngresado: string = '';
+
+  provincias: string[] = [
+    'Álava', 'Albacete', 'Alicante', 'Almería', 'Asturias', 'Ávila', 'Badajoz',
+    'Barcelona', 'Burgos', 'Cáceres', 'Cádiz', 'Cantabria', 'Castellón', 'Ciudad Real',
+    'Córdoba', 'La Coruña', 'Cuenca', 'Gerona', 'Granada', 'Guadalajara', 'Guipúzcoa',
+    'Huelva', 'Huesca', 'Islas Baleares', 'Jaén', 'León', 'Lérida', 'Lugo', 'Madrid',
+    'Málaga', 'Murcia', 'Navarra', 'Orense', 'Palencia', 'Las Palmas', 'Pontevedra',
+    'La Rioja', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa Cruz de Tenerife',
+    'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'
+  ];
+
   ngOnInit() {
     this.updateTime();
   }
@@ -212,7 +226,44 @@ export class ExcelImporterComponent implements OnInit {
       this.excelData[rowIndex] = [...this.excelData[rowIndex]]; // Crear una nueva referencia para la fila
       this.excelData[rowIndex][colIndex] = newValue;  // Actualizar la celda específica
     }
-  }  
+  } 
+  
+  buscarFilas(): void {
+    const errores: string[] = [];
+  
+    if (!this.provinciaSeleccionada) {
+      errores.push('Debes seleccionar una provincia.');
+    }
+  
+    if (!this.municipioIngresado || this.municipioIngresado.trim() === '') {
+      errores.push('Debes escribir un municipio.');
+    }
+  
+    if (errores.length > 0) {
+      this.mostrarErrores(errores);
+      return;
+    }
+  
+    const municipio = this.municipioIngresado.toLowerCase();
+    const provincia = this.provinciaSeleccionada.toLowerCase();
+  
+    // Buscar en excelData
+    const filasCoincidentes: number[] = [];
+    this.excelData.forEach((fila, index) => {
+      const contieneMunicipio = fila.some((celda : any) => celda?.toString().toLowerCase().includes(municipio));
+      const contieneProvincia = fila.some((celda : any) => celda?.toString().toLowerCase().includes(provincia));
+  
+      if (contieneMunicipio && contieneProvincia) {
+        filasCoincidentes.push(index + 1); // Sumar 1 si quieres mostrar la fila como número humano (no índice)
+      }
+    });
+  
+    if (filasCoincidentes.length === 0) {
+      this.mostrarMensaje(`No se encontraron coincidencias para "${this.municipioIngresado}" en "${this.provinciaSeleccionada}".`);
+    } else {
+      this.mostrarMensaje(`Coincidencias encontradas en las filas: ${filasCoincidentes.join(', ')}`);
+    }
+  }
   
   
 }

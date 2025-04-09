@@ -9,7 +9,7 @@
     <button class="boton" (click)="revisarControlesIniciales()">
       <i></i>Revisión de controles
     </button>
-    <button class="boton">
+    <button class="boton" (click)="mostrarBuscador = !mostrarBuscador">
       <i></i>Localizar municipio y provincia
     </button>
     <button class="boton">
@@ -28,6 +28,27 @@
       <i></i>Copiar antecedentes
     </button>
   </div>
+
+  <div class="modal-overlay" *ngIf="mostrarBuscador">
+    <div class="modal-content">
+      <h3>Buscar por provincia y municipio</h3>
+  
+      <label for="provincia">Provincia:</label>
+      <select id="provincia" [(ngModel)]="provinciaSeleccionada">
+        <option value="">-- Selecciona una provincia --</option>
+        <option *ngFor="let prov of provincias" [value]="prov">{{ prov }}</option>
+      </select>
+  
+      <label for="municipio">Municipio:</label>
+      <input id="municipio" [(ngModel)]="municipioIngresado" placeholder="Escribe el municipio" />
+  
+      <div class="modal-buttons">
+        <button (click)="buscarFilas()">Confirmar</button>
+        <button (click)="mostrarBuscador = false">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  
 
   <input class="input_xlsx" type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
