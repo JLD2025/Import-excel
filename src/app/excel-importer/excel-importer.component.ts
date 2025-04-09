@@ -254,7 +254,7 @@ export class ExcelImporterComponent implements OnInit {
       const contieneProvincia = fila.some((celda : any) => celda?.toString().toLowerCase().includes(provincia));
   
       if (contieneMunicipio && contieneProvincia) {
-        filasCoincidentes.push(index + 1); // Sumar 1 si quieres mostrar la fila como número humano (no índice)
+        filasCoincidentes.push(index); // Sumar 1 si quieres mostrar la fila como número humano (no índice)
       }
     });
   
