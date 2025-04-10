@@ -38,7 +38,7 @@
         <option value="">-- Selecciona una provincia --</option>
         <option *ngFor="let prov of provincias" [value]="prov">{{ prov }}</option>
       </select>
-  
+      <hr>
       <label for="municipio">Municipio:</label>
       <input id="municipio" [(ngModel)]="municipioIngresado" placeholder="Escribe el municipio" />
   
