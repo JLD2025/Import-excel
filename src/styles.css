@@ -196,4 +196,12 @@ table {
 .modal-buttons button {
     margin-left: 10px;
 }
+
+.ReferenciaCatastral{
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+    text-decoration-color: black;
+    text-decoration-thickness: 1px; 
+}
   

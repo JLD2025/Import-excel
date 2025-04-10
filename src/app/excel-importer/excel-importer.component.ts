@@ -42,6 +42,9 @@ export class ExcelImporterComponent implements OnInit {
     'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'
   ];
 
+  mostrarVentana: boolean = false;
+  referenciaIngresado: string = "";
+
   ngOnInit() {
     this.updateTime();
   }
@@ -264,6 +267,48 @@ export class ExcelImporterComponent implements OnInit {
       this.mostrarMensaje(`Coincidencias encontradas en las filas: ${filasCoincidentes.join(', ')}`);
     }
   }
+
+  buscarRegistros(): void {
+    const errores: string[] = [];
   
+    if (!this.referenciaIngresado || this.referenciaIngresado.trim() === '') {
+      errores.push('Debes escribir una referencia catastral.');
+    }
+  
+    if (errores.length > 0) {
+      this.mostrarErrores(errores);
+      return;
+    }
+  
+    const referencia = this.referenciaIngresado.toLowerCase();
+  
+    // Buscar en excelData
+    const filasCoincidentes: number[] = [];
+    this.excelData.forEach((fila, index) => {
+      const contieneReferencia = fila.some((celda : any) => celda?.toString().toLowerCase().includes(referencia));
+  
+      if (contieneReferencia) {
+        filasCoincidentes.push(index); // Sumar 1 si quieres mostrar la fila como número humano (no índice)
+      }
+    });
+  
+    if (filasCoincidentes.length === 0) {
+      this.mostrarMensaje(`No se encontraron coincidencias para "${this.referenciaIngresado}".`);
+    } else {
+      const coincidenciasDetalles: string[] = filasCoincidentes.map((index) => {
+        const fila = this.excelData[index];
+  
+        // Suponiendo que las columnas "Tipo Registro", "Localidad Registro", "Nº Registro"
+        const tipoRegistro = fila[12]; 
+        const localidadRegistro = fila[13]; 
+        const numeroRegistro = fila[14]; 
+  
+        return `Fila ${index}: Tipo Registro: ${tipoRegistro}, Localidad Registro: ${localidadRegistro}, Nº Registro: ${numeroRegistro}`;
+      });
+  
+      // Mostrar las coincidencias encontradas con los detalles de las columnas
+      this.mostrarMensaje(`Coincidencias encontradas:\n${coincidenciasDetalles.join('\n')}`);
+    }
+  }
   
 }

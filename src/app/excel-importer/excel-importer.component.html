@@ -12,7 +12,7 @@
     <button class="boton" (click)="mostrarBuscador = !mostrarBuscador">
       <i></i>Localizar municipio y provincia
     </button>
-    <button class="boton">
+    <button class="boton" (click)="mostrarVentana = !mostrarVentana">
       <i></i>Localizar registros
     </button>
     <button class="boton">
@@ -45,6 +45,19 @@
       <div class="modal-buttons">
         <button (click)="buscarFilas()">Confirmar</button>
         <button (click)="mostrarBuscador = false">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" *ngIf="mostrarVentana">
+    <div class="modal-content">
+      <h3 class="ReferenciaCatastral">Localizar registros</h3>
+      <label for="referencia-catastral">Referencia Catastral:</label>
+      <hr>
+      <input id="referencia-catastral" [(ngModel)]="referenciaIngresado" placeholder="Referencia Catastral"/>
+      <div class="modal-buttons">
+        <button (click)="buscarRegistros()">Confirmar</button>
+        <button (click)="mostrarVentana = false">Cancelar</button>
       </div>
     </div>
   </div>
