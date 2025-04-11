@@ -44,7 +44,7 @@
   
       <div class="modal-buttons">
         <button (click)="buscarFilas()">Confirmar</button>
-        <button (click)="mostrarBuscador = false">Cancelar</button>
+        <button (click)="cancelarBusqueda()">Cancelar</button>
       </div>
     </div>
   </div>
@@ -57,7 +57,7 @@
       <input id="referencia-catastral" [(ngModel)]="referenciaIngresado" placeholder="Referencia Catastral"/>
       <div class="modal-buttons">
         <button (click)="buscarRegistros()">Confirmar</button>
-        <button (click)="mostrarVentana = false">Cancelar</button>
+        <button (click)="cancelarBusqueda()">Cancelar</button>
       </div>
     </div>
   </div>

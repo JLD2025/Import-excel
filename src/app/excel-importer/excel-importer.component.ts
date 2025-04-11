@@ -341,5 +341,16 @@ export class ExcelImporterComponent implements OnInit {
       this.mostrarMensaje(`Coincidencias encontradas:\n${coincidenciasDetalles.join('\n')}`);
     }
   }
+
+  cancelarBusqueda() {
+    // Vaciamos los campos
+    this.provinciaSeleccionada = '';
+    this.municipioIngresado = '';
+    this.referenciaIngresado = '';
+  
+    // Cerramos los modales
+    this.mostrarBuscador = false;
+    this.mostrarVentana = false;
+  }  
   
 }
