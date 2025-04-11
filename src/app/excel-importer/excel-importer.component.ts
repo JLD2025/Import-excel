@@ -275,6 +275,9 @@ export class ExcelImporterComponent implements OnInit {
   
     if (errores.length > 0) {
       this.mostrarErrores(errores);
+      setTimeout(() => {
+        this.cerrarErrores(); 
+    }, 4000);
       return;
     }
   
