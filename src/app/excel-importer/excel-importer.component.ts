@@ -214,8 +214,39 @@ export class ExcelImporterComponent implements OnInit {
   
   // Métodos para mostrar errores y mensajes
   mostrarErrores(errores: string[]) {
-    alert('Errores encontrados:\n' + errores.join('\n'));
+    const container = document.getElementById('error-container');
+    const lista = document.getElementById('error-list');
+    const closeButton = document.getElementById('close-btn');
+    
+    if (!container || !lista) return;
+
+    lista.innerHTML = '';
+
+    if (errores.length === 0) {
+      container.style.display = 'none';
+      return;
+    }
+
+    errores.forEach(error => {
+      const li = document.createElement('li');
+      li.textContent = error;
+      lista.appendChild(li);
+    });
+
+    container.style.display = 'block';
+
+    if (closeButton) {
+      closeButton.addEventListener('click', this.cerrarErrores);
+    }
   }
+
+  cerrarErrores(){
+    const container = document.getElementById('error-container');
+    if (container ) {
+      container.style.display = 'none';
+    }
+  }
+
   
   mostrarMensaje(mensaje: string) {
     alert(`Mensaje: ${mensaje}`);

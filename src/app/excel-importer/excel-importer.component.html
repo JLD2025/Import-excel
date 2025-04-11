@@ -61,7 +61,12 @@
       </div>
     </div>
   </div>
-  
+
+  <div id="error-container" class="error-container" style="display: none;">
+    <button id="close-btn" class="close-btn" onclick="cerrarErrores()">X</button>
+    <strong>Errores encontrados:</strong>
+    <ul id="error-list"></ul>
+  </div>  
 
   <input class="input_xlsx" type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
