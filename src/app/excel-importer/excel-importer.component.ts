@@ -314,7 +314,7 @@ export class ExcelImporterComponent implements OnInit {
     });
   
     if (filasCoincidentes.length === 0) {
-      this.mostrarMensaje(`No se encontraron coincidencias para "${this.municipioIngresado}" en "${this.provinciaSeleccionada}".`);
+      errores.push(`No se encontraron coincidencias para "${this.municipioIngresado}" en "${this.provinciaSeleccionada}".`);
     } else {
       this.mostrarMensaje(`Coincidencias encontradas en las filas: ${filasCoincidentes.join(', ')}`);
     }
@@ -324,14 +324,14 @@ export class ExcelImporterComponent implements OnInit {
     const errores: string[] = [];
   
     if (!this.referenciaIngresado || this.referenciaIngresado.trim() === '') {
-      errores.push('Debes escribir una referencia catastral.');
+      errores.push('No puede estar vacio.');
     }
-  
+
     if (errores.length > 0) {
       this.mostrarErrores(errores);
       setTimeout(() => {
         this.cerrarErrores(); 
-    }, 3000);
+      }, 3000);
       return;
     }
   
@@ -348,10 +348,15 @@ export class ExcelImporterComponent implements OnInit {
     });
   
     if (filasCoincidentes.length === 0) {
-      this.mostrarMensaje(`No se encontraron coincidencias para "${this.referenciaIngresado}".`);
-    } else {
+      this.mostrarErrores(['Debes escribir una referencia catastral.']);
+      setTimeout(() => {
+          this.cerrarErrores(); 
+      }, 3000);
+        return;
+    }
+    
       const coincidenciasDetalles: string[] = filasCoincidentes.map((index) => {
-        const fila = this.excelData[index];
+      const fila = this.excelData[index];
   
         // Suponiendo que las columnas "Tipo Registro", "Localidad Registro", "Nº Registro"
         const tipoRegistro = fila[12]; 
@@ -360,10 +365,9 @@ export class ExcelImporterComponent implements OnInit {
   
         return `Fila ${index}: Tipo Registro: ${tipoRegistro}, Localidad Registro: ${localidadRegistro}, Nº Registro: ${numeroRegistro}`;
       });
-  
+
       // Mostrar las coincidencias encontradas con los detalles de las columnas
       this.mostrarMensaje(`Coincidencias encontradas:\n${coincidenciasDetalles.join('\n')}`);
-    }
   }
 
   cancelarBusqueda() {

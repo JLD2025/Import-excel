@@ -234,9 +234,9 @@ table {
 
 .ventana-mensaje {
     position: fixed;
-    top: auto;
-    right: auto;
-    max-width: 400px;
+    top: 250px;
+    left: 740px;
+    max-width: auto;
     padding: 15px;
     border-radius: 6px;
     z-index: 1000;
