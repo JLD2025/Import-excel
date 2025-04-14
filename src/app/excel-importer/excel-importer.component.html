@@ -43,7 +43,7 @@
       <input id="municipio" [(ngModel)]="municipioIngresado" placeholder="Escribe el municipio" />
   
       <div class="modal-buttons">
-        <button (click)="buscarFilas()">Confirmar</button>
+        <button (click)="buscarFilas(); mensajeVisible = !mensajeVisible">Confirmar</button>
         <button (click)="cancelarBusqueda()">Cancelar</button>
       </div>
     </div>
@@ -70,6 +70,10 @@
         <button (click)="cancelarBusqueda()">No</button>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="mensajeVisible" [ngStyle]="estiloMensaje" class="ventana-mensaje">
+    <div [innerHTML]="contenidoMensaje"></div>
   </div>
 
   <div id="error-container" class="error-container" style="display: none;">

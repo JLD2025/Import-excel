@@ -46,6 +46,9 @@ export class ExcelImporterComponent implements OnInit {
   referenciaIngresado: string = "";
 
   mostrarGuardado: boolean = false;
+  mensajeVisible: boolean = false;
+  contenidoMensaje: string = '';
+  estiloMensaje: any = {};
 
   ngOnInit() {
     this.updateTime();
@@ -250,9 +253,21 @@ export class ExcelImporterComponent implements OnInit {
     }
   }
 
-  
   mostrarMensaje(mensaje: string) {
-    alert(`Mensaje: ${mensaje}`);
+    this.contenidoMensaje = `✅ ${mensaje}`;
+    this.estiloMensaje = {
+      backgroundColor: '#d4edda',
+      color: '#155724',
+      border: '1px solid #c3e6cb'
+    };
+    this.mostrarDiv();
+  }
+  
+  mostrarDiv() {
+    this.mensajeVisible = true;
+    setTimeout(() => {
+      this.mensajeVisible = false;
+    }, 3000);
   }
 
   onCellEdit(event: any, rowIndex: number, colIndex: number): void {

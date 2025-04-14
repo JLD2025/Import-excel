@@ -231,4 +231,17 @@ table {
     font-size: 20px;
     cursor: pointer;
 }
+
+.ventana-mensaje {
+    position: fixed;
+    top: auto;
+    right: auto;
+    max-width: 400px;
+    padding: 15px;
+    border-radius: 6px;
+    z-index: 1000;
+    font-family: sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+  
   
