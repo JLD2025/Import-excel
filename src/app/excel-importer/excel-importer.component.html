@@ -5,7 +5,7 @@
   <p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
 
   <div class="action-buttons">
-    <button class="boton" (click)="exportToExcel()">Guardar Cambios</button>
+    <button class="boton" (click)="mostrarGuardado = !mostrarGuardado">Guardar Cambios</button>
     <button class="boton" (click)="revisarControlesIniciales()">
       <i></i>Revisión de controles
     </button>
@@ -58,6 +58,16 @@
       <div class="modal-buttons">
         <button (click)="buscarRegistros()">Confirmar</button>
         <button (click)="cancelarBusqueda()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="mostrarGuardado">
+    <div class="modal-content">
+      <h3>¿Quieres guardar los cambios?</h3>
+      <div class="modal-buttons">
+        <button (click)="exportToExcel()">Si</button>
+        <button (click)="cancelarBusqueda()">No</button>
       </div>
     </div>
   </div>

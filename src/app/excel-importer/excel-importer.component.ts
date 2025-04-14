@@ -45,6 +45,8 @@ export class ExcelImporterComponent implements OnInit {
   mostrarVentana: boolean = false;
   referenciaIngresado: string = "";
 
+  mostrarGuardado: boolean = false;
+
   ngOnInit() {
     this.updateTime();
   }
@@ -138,6 +140,7 @@ export class ExcelImporterComponent implements OnInit {
     XLSX.writeFile(workbook, `${this.fileName}_Datos_Modificados.xlsx`);
 
     this.loadDataFromExcelData(this.excelData);
+    this.cancelarBusqueda();
   }
 
 
@@ -357,6 +360,7 @@ export class ExcelImporterComponent implements OnInit {
     // Cerramos los modales
     this.mostrarBuscador = false;
     this.mostrarVentana = false;
+    this.mostrarGuardado = false;
   }  
   
 }
