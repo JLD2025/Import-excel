@@ -285,8 +285,13 @@ export class ExcelImporterComponent implements OnInit {
   } 
 
   onRowClick(index: number){
-    this.selectedRowIndex = index;
-    this.selectedRowData = this.excelData[index];
+    if(this.selectedRowIndex === index){
+      this.selectedRowIndex = null;
+      this.selectedRowData = null;
+    }else{
+      this.selectedRowIndex = index;
+      this.selectedRowData = this.excelData[index];
+    }
   }
 
   onBuscarAntecedentes() {
