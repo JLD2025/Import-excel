@@ -15,7 +15,7 @@
     <button class="boton" (click)="mostrarVentana = !mostrarVentana">
       <i></i>Localizar registros
     </button>
-    <button class="boton">
+    <button class="boton" (click)="onBuscarAntecedentes()">
       <i></i>Búsqueda de antecedentes
     </button>
     <button class="boton">
@@ -99,7 +99,7 @@
   <div class="styles">
     <div class="table-container">
       <table *ngIf="excelData.length > 0">
-        <tr *ngFor="let row of excelData; let rowIndex = index">
+        <tr *ngFor="let row of excelData; let rowIndex = index"n (click)="onRowClick(rowIndex)" [class.selected-row]="selectedRowIndex === rowIndex">
           <td *ngFor="let cell of row; let colIndex = index" contenteditable="true" (blur)="onCellEdit($event, rowIndex, colIndex)">
            {{cell}}
           </td>

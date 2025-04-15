@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-excel-importer',
@@ -49,6 +50,9 @@ export class ExcelImporterComponent implements OnInit {
   mensajeVisible: boolean = false;
   contenidoMensaje: string = '';
   estiloMensaje: any = {};
+
+  selectedRowIndex: number | null = null;
+  selectedRowData: any[] | null = null;
 
   ngOnInit() {
     this.updateTime();
@@ -279,6 +283,20 @@ export class ExcelImporterComponent implements OnInit {
       this.excelData[rowIndex][colIndex] = newValue;  // Actualizar la celda específica
     }
   } 
+
+  onRowClick(index: number){
+    this.selectedRowIndex = index;
+    this.selectedRowData = this.excelData[index];
+  }
+
+  onBuscarAntecedentes() {
+    const errores: string[] = [];
+    if (this.selectedRowData) {
+      this.mostrarMensaje('Mostrando antecedentes: ' + this.selectedRowData.join(', '));
+    } else {
+      errores.push('Por favor, seleccioná una fila primero.');
+    }
+  }
   
   buscarFilas(): void {
     const errores: string[] = [];
