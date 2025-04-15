@@ -262,7 +262,7 @@ export class ExcelImporterComponent implements OnInit {
     this.estiloMensaje = {
       backgroundColor: '#d4edda',
       color: '#155724',
-      border: '1px solid rgb(0, 0, 0)'
+      border: '1px solid rgb(0, 0, 0)',
     };
     this.mostrarDiv();
   }

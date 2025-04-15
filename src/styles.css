@@ -200,9 +200,6 @@ table {
 .ReferenciaCatastral{
     text-align: center;
     font-weight: bold;
-    text-decoration: underline;
-    text-decoration-color: black;
-    text-decoration-thickness: 1px; 
 }
 
 .error-container {
@@ -243,6 +240,7 @@ table {
     z-index: 1000;
     font-family: sans-serif;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: small;
 }
 
 .selected-row{
