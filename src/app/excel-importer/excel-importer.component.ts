@@ -267,7 +267,7 @@ export class ExcelImporterComponent implements OnInit {
     this.mensajeVisible = true;
     setTimeout(() => {
       this.mensajeVisible = false;
-    }, 3000);
+    }, 3500);
   }
 
   onCellEdit(event: any, rowIndex: number, colIndex: number): void {
@@ -295,7 +295,7 @@ export class ExcelImporterComponent implements OnInit {
       this.mostrarErrores(errores);
       setTimeout(() => {
         this.cerrarErrores(); 
-    }, 3000);
+    }, 3500);
       return;
     }
   
@@ -314,10 +314,25 @@ export class ExcelImporterComponent implements OnInit {
     });
   
     if (filasCoincidentes.length === 0) {
-      errores.push(`No se encontraron coincidencias para "${this.municipioIngresado}" en "${this.provinciaSeleccionada}".`);
-    } else {
-      this.mostrarMensaje(`Coincidencias encontradas en las filas: ${filasCoincidentes.join(', ')}`);
+      this.mostrarErrores(['No se encontraron coincidencias para ' + this.municipioIngresado + ' en ' + this.provinciaSeleccionada]);
+      setTimeout(() => {
+          this.cerrarErrores(); 
+      }, 3500);
+        return;
     }
+    
+    const coincidenciasDetalles: string[] = filasCoincidentes.map((index) => {
+      const fila = this.excelData[index];
+      const tipoRegistro = fila[12]; 
+      const localidadRegistro = fila[13]; 
+      const numeroRegistro = fila[14]; 
+    
+      return `Fila ${index}: Tipo Registro: ${tipoRegistro}, Localidad Registro: ${localidadRegistro}, Nº Registro: ${numeroRegistro}`;
+    });
+    
+    this.mostrarMensaje(`Coincidencias encontradas:\n${coincidenciasDetalles.join('\n')}`);
+    
+  
   }
 
   buscarRegistros(): void {
@@ -331,7 +346,7 @@ export class ExcelImporterComponent implements OnInit {
       this.mostrarErrores(errores);
       setTimeout(() => {
         this.cerrarErrores(); 
-      }, 3000);
+      }, 3500);
       return;
     }
   
@@ -351,7 +366,7 @@ export class ExcelImporterComponent implements OnInit {
       this.mostrarErrores(['Debes escribir una referencia catastral.']);
       setTimeout(() => {
           this.cerrarErrores(); 
-      }, 3000);
+      }, 3500);
         return;
     }
     
