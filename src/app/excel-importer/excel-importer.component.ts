@@ -258,7 +258,7 @@ export class ExcelImporterComponent implements OnInit {
     this.estiloMensaje = {
       backgroundColor: '#d4edda',
       color: '#155724',
-      border: '1px solid #c3e6cb'
+      border: '1px solid rgb(0, 0, 0)'
     };
     this.mostrarDiv();
   }
@@ -330,8 +330,19 @@ export class ExcelImporterComponent implements OnInit {
       return `Fila ${index}: Tipo Registro: ${tipoRegistro}, Localidad Registro: ${localidadRegistro}, Nº Registro: ${numeroRegistro}`;
     });
     
-    this.mostrarMensaje(`Coincidencias encontradas:\n${coincidenciasDetalles.join('\n')}`);
-    
+    let tablaHtml = `
+    <table border="1" cellspacing="0" cellpadding="1">
+      <tr>
+        <th>Nombre</th>
+      </tr>
+      ${coincidenciasDetalles.map(detalle => {
+        const [nombre] = detalle.split('|').map(x => x.trim());
+        return `<tr><td>${nombre}</td></tr>`;
+      }).join('')}
+    </table>
+  `;
+
+  this.mostrarMensaje(`Coincidencias encontradas:<br>${tablaHtml}`);
   
   }
 
