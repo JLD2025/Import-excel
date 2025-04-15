@@ -234,9 +234,10 @@ table {
 
 .ventana-mensaje {
     position: fixed;
-    top: 180px;
-    left: 550px;
-    max-width: 950px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 1300px;
     padding: 15px;
     border-radius: 6px;
     z-index: 1000;

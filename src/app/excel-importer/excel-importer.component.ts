@@ -52,7 +52,7 @@ export class ExcelImporterComponent implements OnInit {
   estiloMensaje: any = {};
 
   selectedRowIndex: number | null = null;
-  selectedRowData: any[] | null = null;
+  selectedRowData: string | null = null;
 
   ngOnInit() {
     this.updateTime();
@@ -292,7 +292,23 @@ export class ExcelImporterComponent implements OnInit {
   onBuscarAntecedentes() {
     const errores: string[] = [];
     if (this.selectedRowData) {
-      this.mostrarMensaje('Mostrando antecedentes: ' + this.selectedRowData.join(', '));
+      const fila = this.selectedRowData;
+
+      const headers = Object.keys(fila);
+      const valores = Object.values(fila);
+
+      let tablaHtml = `
+          <table border="1" cellspacing="0" cellpadding="1">
+            <tr>
+              ${headers.map(header => `<th>${header}</th>`).join('')}
+            </tr>
+            <tr>
+              ${valores.map(valor => `<td>${valor}</td>`).join('')}
+            </tr>
+          </table>
+      `;
+
+      this.mostrarMensaje('Mostrando antecedentes: ' + tablaHtml);
     } else {
       errores.push('Por favor, seleccioná una fila primero.');
     }
