@@ -52,7 +52,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .table-container {
     width: 100vw;
-    height: 57vh; /* Ajustable */
+    height: 56vh; /* Ajustable */
     overflow-x: auto; 
     overflow-y: auto;
     border: 1px solid black; 
