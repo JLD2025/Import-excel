@@ -1,0 +1,50 @@
+/* Fondo degradado */
+.welcome-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #e0f7fa, #80deea);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+  
+  /* Tarjeta central */
+.welcome-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+}
+  
+  /* Título */
+.welcome-card h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #00796b;
+}
+  
+  /* Texto */
+.welcome-card p {
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    color: #555;
+}
+  
+  /* Botón */
+.welcome-card button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #00796b;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  
+.welcome-card button:hover {
+    background-color: #004d40;
+}
+  
