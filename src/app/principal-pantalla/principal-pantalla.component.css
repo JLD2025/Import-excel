@@ -1,3 +1,9 @@
+.date-time{
+ position: absolute;
+ top: 0;
+ left: 0;
+}
+
 /* Fondo degradado */
 .welcome-container {
     height: 100vh;
