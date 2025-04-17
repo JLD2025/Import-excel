@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoteService } from '../services/lote.service';
 
 @Component({
   selector: 'app-principal-pantalla',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './principal-pantalla.component.css'
 })
 export class PrincipalPantallaComponent implements OnInit {
-  constructor(private router : Router){}
+  constructor(private router : Router, private loteService: LoteService){}
   currentDate: string = "";
 
   ngOnInit() {
@@ -31,8 +32,19 @@ export class PrincipalPantallaComponent implements OnInit {
     this.router.navigate(['/alta-lotes'])
   }
 
-  Conexion(){
-    this.router.navigate(['/alta-lotes'])
+  Conexion() {
+    const loteid = 696;
+     console.log('Intentando hacer la conexión...');
+    this.loteService.obtenerLote(loteid).subscribe({
+      next: (res) => {
+        console.log('Respuesta del backend:', res);
+        alert('Conexión exitosa: ' + JSON.stringify(res));
+        // Aquí podrías guardar los datos en una propiedad para mostrarlos en la vista
+      },
+      error: (err) => {
+        console.error('Error al conectar:', err);
+        alert('Error al conectar');
+      }
+    });
   }
-
 }
