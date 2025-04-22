@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-excel-importer',
@@ -55,6 +56,11 @@ export class ExcelImporterComponent implements OnInit {
 
   ngOnInit() {
     this.updateTime();
+    const data = history.state.loteData;
+
+    if (data) {
+      this.mostrarLote('Conexión exitosa: ' + JSON.stringify(data));
+    }
   }
 
   updateTime(){
@@ -266,6 +272,27 @@ export class ExcelImporterComponent implements OnInit {
     this.mostrarDiv();
   }
   
+  mostrarLote(mensaje: string) {
+    this.mensajeVisible = true;
+    this.contenidoMensaje = `✅ ${mensaje}`;
+    this.estiloMensaje = {
+      backgroundColor: '#d4edda',
+      color: '#155724',
+      border: '1px solid rgb(0, 0, 0)',
+      padding: '10px',
+      margin: '10px 0',
+      whiteSpace: 'pre-wrap',     
+      wordWrap: 'break-word',     
+      overflowWrap: 'break-word',  
+      maxWidth: '90%',
+      height:'250px'
+    };
+  }
+
+  cerrarMensaje() {
+    this.mensajeVisible = false;
+  }
+
   mostrarDiv() {
     this.mensajeVisible = true;
     setTimeout(() => {

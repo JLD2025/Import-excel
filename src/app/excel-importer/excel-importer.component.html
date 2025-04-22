@@ -73,7 +73,11 @@
   </div>
 
   <div *ngIf="mensajeVisible" [ngStyle]="estiloMensaje" class="ventana-mensaje">
-    <div [innerHTML]="contenidoMensaje"></div>
+    <button (click)="cerrarMensaje()" 
+          style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 16px; cursor: pointer;">
+      ✖
+    </button>
+    {{ contenidoMensaje }}
   </div>
 
   <div id="error-container" class="error-container" style="display: none;">

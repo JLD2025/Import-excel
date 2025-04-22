@@ -28,8 +28,8 @@ export class PrincipalPantallaComponent implements OnInit {
     this.currentDate = ahora.toLocaleString('es-ES');
   }
 
-  AltaLotes(){
-    this.router.navigate(['/alta-lotes'])
+  AltaLotes(data?: any){
+    this.router.navigate(['/alta-lotes'], {state: { loteData: data } })
   }
 
   Conexion() {
@@ -38,7 +38,8 @@ export class PrincipalPantallaComponent implements OnInit {
     this.loteService.obtenerLote(loteid).subscribe({
       next: (res) => {
         console.log('Respuesta del backend:', res);
-        alert('Conexión exitosa: ' + JSON.stringify(res));
+        //alert('Conexión exitosa: ' + JSON.stringify(res));
+        this.AltaLotes(res);
         // Aquí podrías guardar los datos en una propiedad para mostrarlos en la vista
       },
       error: (err) => {
