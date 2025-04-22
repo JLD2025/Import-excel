@@ -157,7 +157,7 @@ export class ExcelImporterComponent implements OnInit {
 
 
   revisarControlesIniciales() {
-    let errores = [];
+    let errores: string[] = [];
   
     // Verificar que los datos han sido importados correctamente
     if (!this.datos || this.datos.length === 0) {
@@ -168,52 +168,42 @@ export class ExcelImporterComponent implements OnInit {
     // Obtener los encabezados dinámicamente de los datos
     const headers = Object.keys(this.datos[0]);
   
-    const requiredHeaders = ['Nº Finca', 'Nº Registro', 'Código Postal'];
+    const input = prompt('Ingresa los encabezados requeridos, separados por comas (ejemplo: "Nº Finca, Nº Registro, Código Postal"):');
 
-    const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
-
-    if (missingHeaders.length > 0) {
-      if (missingHeaders.length === requiredHeaders.length) {
-        // Si faltan todos los encabezados, muestra solo un mensaje
-        errores.push(`No corresponde a este Excel. Botón inhabilitado`);
-      } else {
-        // Si faltan solo algunos encabezados, muestra un mensaje por cada encabezado faltante
-        missingHeaders.forEach(header => {
-          errores.push(`Falta el encabezado: ${header}`);
-        });
-      }
-    }
+    if (input !== null) {
+      // Convertir la entrada en un array
+      const requiredHeaders = input.split(',').map(header => header.trim());
   
+      // Filtrar los encabezados faltantes
+      const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
+  
+      if (missingHeaders.length > 0) {
+          console.log('Faltan los siguientes encabezados:', missingHeaders);
+      } else {
+          console.log('Todos los encabezados están presentes.');
+      }
+    } else {
+        console.log('No se proporcionaron encabezados.');
+    }
+    
     // Si los encabezados necesarios están presentes, revisar que los registros tengan valores válidos
+    // Si no hay errores previos, verificamos los campos faltantes en los registros
     if (!errores.length) {
-      const verificarCampo = (campo : string, nombreCampo : string) => {
+      // Función para verificar campos vacíos en los registros
+      const verificarCampo = (campo: string) => {
         return this.datos
-          .map((item, index) => (!item[campo] ? { fila: index + 1, columna: headers.indexOf(nombreCampo) + 1 } : null))
+          .map((item, index) => (!item[campo] ? { fila: index + 1, columna: headers.indexOf(campo) + 1 } : null))
           .filter(item => item !== null);
       };
-      
-      // Verificar registros sin finca asignada
-      const sinFinca = verificarCampo('Nº Finca', 'Nº Finca');
-      if (sinFinca.length > 0) {
-        const detalles = sinFinca.map(item => `Fila: ${item.fila}, Columna: ${item.columna} (Nº Finca)`);
-        errores.push(`Registros sin finca asignada en las posiciones: ${detalles.join(', ')}`);
-      }
-      
-      // Verificar registros sin registro de propiedad
-      const sinRegistroPropiedad = verificarCampo('Nº Registro', 'Nº Registro');
-      if (sinRegistroPropiedad.length > 0) {
-        const detalles = sinRegistroPropiedad.map(item => `Fila: ${item.fila}, Columna: ${item.columna} (Nº Registro)`);
-        errores.push(`Registros sin registro de propiedad en las posiciones: ${detalles.join(', ')}`);
-      }
-      
-      // Verificar registros sin código postal
-      const sinCodigoPostal = verificarCampo('Código Postal', 'Código Postal');
-      if (sinCodigoPostal.length > 0) {
-        const detalles = sinCodigoPostal.map(item => `Fila: ${item.fila}, Columna: ${item.columna} (Código Postal)`);
-        errores.push(`Registros sin código postal en las posiciones: ${detalles.join(', ')}`);
-      }
-      
 
+      // Iterar sobre cada encabezado y verificar los registros sin datos en esa columna
+      headers.forEach(header => {
+        const registrosVacios = verificarCampo(header);
+        if (registrosVacios.length > 0) {
+          const detalles = registrosVacios.map(item => `Fila: ${item.fila}, Columna: ${item.columna} (${header})`);
+          errores.push(`Registros sin datos en la columna '${header}' en las posiciones: ${detalles.join(', ')}`);
+        }
+      });
     }
   
     // Si existen errores, mostrarlos
@@ -284,8 +274,8 @@ export class ExcelImporterComponent implements OnInit {
       whiteSpace: 'pre-wrap',     
       wordWrap: 'break-word',     
       overflowWrap: 'break-word',  
-      maxWidth: '90%',
-      height:'250px'
+      maxWidth: '70%',
+      height:'150px'
     };
   }
 
@@ -303,10 +293,13 @@ export class ExcelImporterComponent implements OnInit {
   onCellEdit(event: any, rowIndex: number, colIndex: number): void {
     const newValue = event.target.innerText.trim();
     // Verificar que el nuevo valor no esté vacío antes de asignarlo
-    if (newValue !== '') {
-      // Actualizar el valor en la celda correspondiente
+    if (newValue === '') {
       this.excelData[rowIndex] = [...this.excelData[rowIndex]]; // Crear una nueva referencia para la fila
-      this.excelData[rowIndex][colIndex] = newValue;  // Actualizar la celda específica
+      this.excelData[rowIndex][colIndex] = '';  // Dejar la celda vacía
+    } else {
+        // Si el valor no es vacío, actualizamos normalmente
+        this.excelData[rowIndex] = [...this.excelData[rowIndex]]; // Crear una nueva referencia para la fila
+        this.excelData[rowIndex][colIndex] = newValue;  // Actualizar la celda específica
     }
   } 
 

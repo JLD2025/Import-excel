@@ -212,6 +212,7 @@ table {
     color: #a70000;
     border-radius: 4px;
     font-family: sans-serif;
+    height: 100px;
 }
   
 .error-container ul {
