@@ -11,8 +11,6 @@ export class LoteService {
   obtenerLote(loteid: number) {
     return this.http.post('https://localhost:3939/api/lote/listado',{
         id: loteid
-    },{
-        withCredentials: true
     });
   }
 }
