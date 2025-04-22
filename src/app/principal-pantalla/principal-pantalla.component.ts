@@ -33,7 +33,7 @@ export class PrincipalPantallaComponent implements OnInit {
   }
 
   Conexion() {
-    const loteid = 690;
+    const loteid = 691;
      console.log('Intentando hacer la conexión...');
     this.loteService.obtenerLote(loteid).subscribe({
       next: (res) => {
