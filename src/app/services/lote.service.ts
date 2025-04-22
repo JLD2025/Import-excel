@@ -9,7 +9,7 @@ export class LoteService {
   constructor(private http: HttpClient) {}
 
   obtenerLote(loteid: number) {
-    return this.http.post('https://localhost:3939/api/lote/listado',{
+    return this.http.post('https://valorapre.valmesa.es:3939/api/lote/listado',{
         id: loteid
     },{
         withCredentials: true
