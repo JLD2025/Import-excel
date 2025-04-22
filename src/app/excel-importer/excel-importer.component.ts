@@ -295,7 +295,10 @@ export class ExcelImporterComponent implements OnInit {
 
   onBuscarAntecedentes() {
     const errores: string[] = [];
-    if (this.selectedRowData) {
+    if (!this.selectedRowData || Object.keys(this.selectedRowData).length === 0) {
+      errores.push('No se han importado datos. No hay tablas disponibles para seleccionar.');
+      this.mostrarErrores(errores);
+    } else {
       const fila = this.selectedRowData;
 
       const headers = Object.keys(fila);
@@ -313,8 +316,6 @@ export class ExcelImporterComponent implements OnInit {
       `;
 
       this.mostrarMensaje('Mostrando antecedentes: ' + tablaHtml);
-    } else {
-      errores.push('Por favor, seleccioná una fila primero.');
     }
   }
   
