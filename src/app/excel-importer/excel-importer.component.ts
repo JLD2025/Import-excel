@@ -270,13 +270,14 @@ export class ExcelImporterComponent implements OnInit {
       backgroundColor: '#d4edda',
       color: '#155724',
       border: '1px solid rgb(0, 0, 0)',
-      padding: '10px',
-      margin: '10px 0',
+      padding: '1rem',
+      margin: '1rem 0',
       whiteSpace: 'pre-wrap',     
       wordWrap: 'break-word',     
       overflowWrap: 'break-word',  
-      maxWidth: '70%',
-      height:'150px'
+      width: '100%',
+      maxWidth: '90vw', 
+      height: 'auto'
     };
   }
 
