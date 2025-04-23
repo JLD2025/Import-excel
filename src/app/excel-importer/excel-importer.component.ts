@@ -53,6 +53,7 @@ export class ExcelImporterComponent implements OnInit {
 
   selectedRowIndex: number | null = null;
   selectedRowData: string | null = null;
+  
 
   ngOnInit() {
     this.updateTime();

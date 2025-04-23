@@ -88,8 +88,6 @@
 
   <input class="input_xlsx" type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
-  <p class="message" *ngIf="excelData.length === 0">No hay datos disponibles</p>
-
   <div *ngIf="sheetNames.length > 0" class="style">
     <ul class="horizontal">
       <li *ngFor="let sheetName of sheetNames; let i = index">
