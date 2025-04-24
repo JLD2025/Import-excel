@@ -263,21 +263,71 @@ export class ExcelImporterComponent implements OnInit {
   
   mostrarLote(mensaje: string) {
     this.mensajeVisible = true;
-    this.contenidoMensaje = `✅ ${mensaje}`;
+  
+    const regex = /^(.*?)\s*(\[.*\])$/s;
+    const match = mensaje.match(regex);
+  
+    let encabezado = '✅ ';
+    let filasHtml = '';
+  
+    if (match) {
+      encabezado += match[1];
+      try {
+        const data: Record<string, any>[] = JSON.parse(match[2]);
+  
+        if (Array.isArray(data) && data.length > 0) {
+          // Crear una fila con cada clave-valor
+          const filas = data.map((obj: Record<string, any>) =>
+            Object.keys(obj).reduce((acc: Record<string, any>, key: string) => {
+              let value = obj[key];
+              // Si es null, undefined o vacío, mostrarlo explícitamente
+              if (value === null) {
+                acc[key] = `"null"`;
+              } else if (value === undefined) {
+                acc[key] = `"undefined"`;
+              } else if (value === '') {
+                acc[key] = `"empty"`;
+              } else {
+                acc[key] = `"${value}"`;
+              }
+              return acc;
+            }, {})
+          );
+  
+          // Crear el HTML con los datos sin ordenarlos
+          filasHtml = filas.map(obj => {
+            const formattedObj = JSON.stringify(obj, null, 2); // Para dar formato de objeto JSON
+            return `
+              <pre style="font-family: monospace; text-align: left; margin: 10px 0;">${formattedObj}</pre>
+            `;
+          }).join('');
+        } else {
+          filasHtml = '<p style="text-align: center;">No hay datos para mostrar.</p>';
+        }
+      } catch (e) {
+        filasHtml = `<p style="color: red; text-align: center;">Error al parsear JSON</p>`;
+      }
+    } else {
+      encabezado += mensaje;
+    }
+  
+    this.contenidoMensaje = `
+      <div style="margin-bottom: 1rem; text-align: center;">
+        <strong>${encabezado}</strong>
+      </div>
+      ${filasHtml}
+    `;
+  
     this.estiloMensaje = {
-      backgroundColor: '#d4edda',
-      color: '#155724',
-      border: '1px solid rgb(0, 0, 0)',
-      padding: '1rem',
-      margin: '1rem 0',
-      whiteSpace: 'pre-wrap',     
-      wordWrap: 'break-word',     
-      overflowWrap: 'break-word',  
-      width: '100%',
-      maxWidth: '90vw', 
-      height: 'auto'
+      margin: 'auto',
+      width: 'auto',
+      height: 'auto',
+      maxWidth: '100%',
+      overflowX: 'auto',
+      position: 'fixed',    
+      left: '200px',         
     };
-  }
+  }  
 
   cerrarMensaje() {
     this.mensajeVisible = false;
