@@ -5,20 +5,20 @@
   <p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
 
   <div class="action-buttons">
-    <button class="boton" (click)="mostrarGuardado = !mostrarGuardado">Guardar Cambios</button>
+    <button class="boton" (click)="toggleVentana('guardar')">Guardar Cambios</button>
     <button class="boton" (click)="revisarControlesIniciales()">
       <i></i>Revisión de controles
     </button>
-    <button class="boton" (click)="mostrarBuscador = !mostrarBuscador">
+    <button class="boton" (click)="toggleVentana('buscador')">
       <i></i>Localizar municipio y provincia
     </button>
-    <button class="boton" (click)="mostrarVentana = !mostrarVentana">
+    <button class="boton" (click)="toggleVentana('registros')">
       <i></i>Localizar registros
     </button>
     <button class="boton" (click)="onBuscarAntecedentes()">
       <i></i>Búsqueda de antecedentes
     </button>
-    <button class="boton">
+    <button class="boton" (click)="toggleVentana('tiposBien')">
       <i></i>Búsqueda tipos de bien
     </button>
     <button class="boton primary">
@@ -29,7 +29,7 @@
     </button>
   </div>
 
-  <div class="modal-overlay" *ngIf="mostrarBuscador">
+  <div class="modal-overlay" *ngIf="estadoVentana === 'buscador'">
     <div class="modal-content">
       <h3>Buscar por provincia y municipio</h3>
   
@@ -44,12 +44,12 @@
   
       <div class="modal-buttons">
         <button (click)="buscarFilas()">Confirmar</button>
-        <button (click)="cancelarBusqueda()">Cancelar</button>
+        <button (click)="cancelarBusqueda(); estadoVentana = null">Cancelar</button>
       </div>
     </div>
   </div>
   
-  <div class="modal-overlay" *ngIf="mostrarVentana">
+  <div class="modal-overlay" *ngIf="estadoVentana === 'registros'">
     <div class="modal-content">
       <h3 class="ReferenciaCatastral">Localizar registros</h3>
       <label for="referencia-catastral">Referencia Catastral:</label>
@@ -57,27 +57,39 @@
       <input id="referencia-catastral" [(ngModel)]="referenciaIngresado" placeholder="Referencia Catastral"/>
       <div class="modal-buttons">
         <button (click)="buscarRegistros()">Confirmar</button>
-        <button (click)="cancelarBusqueda()">Cancelar</button>
+        <button (click)="cancelarBusqueda(); estadoVentana = null">Cancelar</button>
       </div>
     </div>
   </div>
 
-  <div class="modal-overlay" *ngIf="mostrarGuardado">
+  <div class="modal-overlay" *ngIf="estadoVentana === 'guardar'">
     <div class="modal-content">
       <h3>¿Quieres guardar los cambios?</h3>
       <div class="modal-buttons">
         <button (click)="exportToExcel()">Si</button>
-        <button (click)="cancelarBusqueda()">No</button>
+        <button (click)="cancelarBusqueda(); estadoVentana = null">No</button>
       </div>
     </div>
   </div>
+
+  <div class="modal-overlay" *ngIf="estadoVentana === 'tiposBien'">
+    <div class="modal-content">
+      <h3 class="bien">Id. Bien</h3>
+      <hr>
+      <input id="bien" [(ngModel)]="idBien" placeholder="Id. Bien"/>
+      <div class="modal-buttons">
+        <button (click)="buscarTipoBien()">Confirmar</button>
+        <button (click)="cancelarBusqueda(); estadoVentana = null">Cancelar</button>
+      </div>
+    </div>
+  </div>    
 
   <div *ngIf="mensajeVisible" [ngStyle]="estiloMensaje" class="ventana-mensaje">
     <button (click)="cerrarMensaje()" 
           style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 16px; cursor: pointer;">
       ✖
     </button>
-    {{ contenidoMensaje }}
+    <div [innerHTML]="contenidoMensaje"></div>
   </div>
 
   <div id="error-container" class="error-container" style="display: none;">

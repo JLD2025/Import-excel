@@ -200,6 +200,11 @@ table {
     font-weight: bold;
 }
 
+.bien{
+    text-align: center;
+    font-weight: bold;
+}
+
 .error-container {
     position: relative;
     padding: 15px 20px;

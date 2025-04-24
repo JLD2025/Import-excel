@@ -28,7 +28,6 @@ export class ExcelImporterComponent implements OnInit {
 
   datos: any[] = [];
 
-  mostrarBuscador: boolean = false;
   provinciaSeleccionada: string = '';
   municipioIngresado: string = '';
 
@@ -42,10 +41,10 @@ export class ExcelImporterComponent implements OnInit {
     'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'
   ];
 
-  mostrarVentana: boolean = false;
+  estadoVentana: string | null = null;
   referenciaIngresado: string = "";
+  idBien: number | null = null;
 
-  mostrarGuardado: boolean = false;
   mensajeVisible: boolean = false;
   contenidoMensaje: string = '';
   estiloMensaje: any = {};
@@ -456,16 +455,70 @@ export class ExcelImporterComponent implements OnInit {
       this.mostrarMensaje(`Coincidencias encontradas:\n${coincidenciasDetalles.join('\n')}`);
   }
 
+  buscarTipoBien(): void {
+    const errores: string[] = [];
+  
+    if (!this.idBien || isNaN(this.idBien) || this.idBien.toString().trim() === '') {
+      errores.push('No puede estar vacio.');
+    }
+
+    if (errores.length > 0) {
+      this.mostrarErrores(errores);
+      setTimeout(() => {
+        this.cerrarErrores(); 
+      }, 3500);
+      return;
+    }
+  
+    if(this.idBien !== null){
+      const bien = this.idBien;
+  
+      // Buscar en excelData
+      const filasCoincidentes: number[] = [];
+      this.excelData.forEach((fila, index) => {
+        const contieneBien = fila.some((celda : any) => celda?.toString().toLowerCase().includes(bien));
+    
+        if (contieneBien) {
+          filasCoincidentes.push(index); // Sumar 1 si quieres mostrar la fila como número humano (no índice)
+        }
+      });
+    
+      if (filasCoincidentes.length === 0) {
+        this.mostrarErrores(['Debes escribir una referencia catastral.']);
+        setTimeout(() => {
+            this.cerrarErrores(); 
+        }, 3500);
+          return;
+      }
+      
+        const coincidenciasDetalles: string[] = filasCoincidentes.map((index) => {
+        const fila = this.excelData[index];
+    
+          // Suponiendo que las columnas "Tipo Registro", "Localidad Registro", "Nº Registro"
+          const tipo = fila[5]; 
+          const descripcionTipoBien = fila[6]; 
+          const domicilioBien = fila[7]; 
+    
+          return `Fila ${index}: Id. bien: ${bien}, Tipo: ${tipo}, Localidad Registro: ${descripcionTipoBien}, Nº Registro: ${domicilioBien}`;
+        });
+
+        // Mostrar las coincidencias encontradas con los detalles de las columnas
+        this.mostrarMensaje(`Coincidencias encontradas:\n${coincidenciasDetalles.join('\n')}`);
+    }
+  
+  }
+
+  toggleVentana(nombre: string) {
+    this.estadoVentana = this.estadoVentana === nombre ? null : nombre;
+  }
+
   cancelarBusqueda() {
-    // Vaciamos los campos
+    // Limpiar campos
     this.provinciaSeleccionada = '';
     this.municipioIngresado = '';
     this.referenciaIngresado = '';
-  
-    // Cerramos los modales
-    this.mostrarBuscador = false;
-    this.mostrarVentana = false;
-    this.mostrarGuardado = false;
-  }  
+    this.idBien = null;
+
+  }
   
 }
