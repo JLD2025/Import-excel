@@ -3,8 +3,19 @@
     <div class="welcome-card">
         <h1>Bienvenido al Sistema de Gestión de Lotes</h1>
         <p>Desde aquí puedes comenzar a trabajar sobre cualquiera de tus lotes</p>
-        <button (click)="Conexion()">Conectar con la base de datos</button>
+        <button (click)="mostrarVentana = !mostrarVentana"  >Conectar con la base de datos</button>
         <hr>
         <button (click)="AltaLotes()">Alta de Lotes (sin conexión a la base de datos)</button>
     </div>
+    <div class="modal-overlay" *ngIf="mostrarVentana">
+        <div class="modal-content">
+          <h3 class="ReferenciaCatastral">Lote id</h3>
+          <hr>
+          <input id="lote" [(ngModel)]="idIngresado" placeholder="Id del Lote"/>
+          <div class="modal-buttons">
+            <button (click)="Conexion()">Confirmar</button>
+            <button (click)="cancelarBusqueda()">Cancelar</button>
+          </div>
+        </div>
+      </div>    
 </div>
