@@ -252,13 +252,13 @@ export class ExcelImporterComponent implements OnInit {
   }
 
   mostrarMensaje(mensaje: string) {
+    this.mensajeVisible = true;
     this.contenidoMensaje = `✅ ${mensaje}`;
     this.estiloMensaje = {
       backgroundColor: '#d4edda',
       color: '#155724',
       border: '1px solid rgb(0, 0, 0)',
     };
-    this.mostrarDiv();
   }
   
   mostrarLote(mensaje: string) {
@@ -325,19 +325,14 @@ export class ExcelImporterComponent implements OnInit {
       maxWidth: '100%',
       overflowX: 'auto',
       position: 'fixed',    
-      left: '200px',         
+      left: '250px',
+      border: '1px solid black',     
+      background: 'white'    
     };
   }  
 
   cerrarMensaje() {
     this.mensajeVisible = false;
-  }
-
-  mostrarDiv() {
-    this.mensajeVisible = true;
-    setTimeout(() => {
-      this.mensajeVisible = false;
-    }, 3500);
   }
 
   onCellEdit(event: any, rowIndex: number, colIndex: number): void {
