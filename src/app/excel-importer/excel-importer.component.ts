@@ -10,7 +10,8 @@ import { HistoryService } from '../services/lote.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './excel-importer.component.html',
-  styleUrls: ['./excel-importer.component.css']
+  styleUrls: ['./excel-importer.component.css'],
+  providers: [HistoryService]
 })
 
 export class ExcelImporterComponent implements OnInit {
