@@ -21,7 +21,7 @@
     <button class="boton" (click)="toggleVentana('tiposBien')">
       <i></i>Búsqueda tipos de bien
     </button>
-    <button class="boton primary">
+    <button class="boton primary" (click)="toggleVentana('generarEncargo')">
       <i></i>Generar Encargo
     </button>
     <button class="boton">
@@ -84,9 +84,19 @@
     </div>
   </div>    
 
+  <div class="modal-overlay" *ngIf="estadoVentana === 'generarEncargo'">
+    <div class="modal-content">
+      <h3>¿Estás seguro de que quieres generar el encargo?</h3>
+      <div class="modal-buttons">
+        <button (click)="generarEncargo()">Sí, generar</button>
+        <button (click)="cancelarBusqueda(); estadoVentana = null">No, cancelar</button>
+      </div>
+    </div>
+  </div>
+
   <div *ngIf="mensajeVisible" [ngStyle]="estiloMensaje" class="ventana-mensaje">
     <button (click)="cerrarMensaje()" 
-          style="position: absolute; top: 5px; right: 0px; background: transparent; border: none; font-size: 16px; cursor: pointer;">
+          style="position: absolute; top: 0; right: 0; background: transparent; border: none; font-size: 16px; cursor: pointer;">
       ✖
     </button>
     <div [innerHTML]="contenidoMensaje"></div>
