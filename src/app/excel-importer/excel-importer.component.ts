@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { jsPDF } from 'jspdf';
+import { HistoryService } from '../services/lote.service';
 
 @Component({
   selector: 'app-excel-importer',
@@ -52,11 +53,13 @@ export class ExcelImporterComponent implements OnInit {
 
   selectedRowIndex: number | null = null;
   selectedRowData: string | null = null;
+
+  constructor(private historyService: HistoryService) {}
   
 
   ngOnInit() {
     this.updateTime();
-    const data = history.state.loteData;
+    const data = this.historyService.getHistoryState();
 
     if (data) {
       this.mostrarLote('Conexión exitosa: ' + JSON.stringify(data));
