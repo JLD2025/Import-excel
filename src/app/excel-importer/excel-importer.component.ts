@@ -356,11 +356,11 @@ export class ExcelImporterComponent implements OnInit {
       width: 'auto',
       height: '280px',
       overflowX: 'auto',
-      transform: 'translate(-237%, -158%)',  // Ajuste para centrar perfectamente el contenedor
+      transform: 'translate(-237%, -158%)',
       border: '1px solid black',
       background: 'white',
-      padding: '10px',  // Agregar algo de relleno para que no quede demasiado pegado a los bordes
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'  // Añadir sombra para darle un toque visual
+      padding: '10px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
     };
 }
 
