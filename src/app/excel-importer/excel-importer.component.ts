@@ -51,6 +51,7 @@ export class ExcelImporterComponent implements OnInit {
   mensajeVisible: boolean = false;
   mensajeLote: boolean = false;
   contenidoMensaje: string = '';
+  contenidoMensajeLote: string = '';
   estiloMensaje: any = {};
 
   selectedRowIndex: number | null = null;
@@ -327,7 +328,7 @@ export class ExcelImporterComponent implements OnInit {
       encabezado += mensaje;
     }
   
-    this.contenidoMensaje = `
+    this.contenidoMensajeLote = `
     <div style="margin-bottom: 1rem; text-align: center;">
       <strong>${encabezado}</strong>
     </div>
@@ -404,7 +405,6 @@ export class ExcelImporterComponent implements OnInit {
 
   cerrarMensaje() {
     this.mensajeVisible = false;
-    this.mensajeLote = false;
   }
 
   onCellEdit(event: any, rowIndex: number, colIndex: number): void {
@@ -638,11 +638,6 @@ export class ExcelImporterComponent implements OnInit {
 
       // Usar los datos para generar el encargo
       this.procesarGeneracionEncargo(referenciaCatastral, idBien);
-    } else {
-      // Si no hay ninguna fila seleccionada
-      this.mensajeVisible = true;
-      this.contenidoMensaje = 'Por favor selecciona una fila para generar el encargo.';
-      this.estiloMensaje = { color: 'red' , position: "absolute", top:"380px", border: "1px solid black", background: "white" };
     }
   }
 
@@ -688,10 +683,11 @@ procesarGeneracionEncargo(referenciaCatastral: string, idBien: string) {
   try {
     doc.save(`Encargo_Inscripcion_Catastral_${referenciaCatastral}.pdf`);
     
-    // Si todo sale bien, mostrar mensaje de éxito
+    /*Si todo sale bien, mostrar mensaje de éxito
     this.mensajeVisible = true;
     this.contenidoMensaje = `¡Encargo generado con éxito para la referencia catastral ${referenciaCatastral}!`;
     this.estiloMensaje = { color: 'green' };
+    */
   } catch (error) {
     // Si hay un error, mostrar mensaje de error
     this.mensajeVisible = true;
