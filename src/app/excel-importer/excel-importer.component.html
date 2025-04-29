@@ -102,6 +102,14 @@
     <div [innerHTML]="contenidoMensaje"></div>
   </div>
 
+  <div *ngIf="mensajeLote" [ngStyle]="estiloMensaje" class="ventana-mensaje">
+    <button (click)="cerrarMensaje()" 
+          style="position: absolute; top: 0; right: 0; background: transparent; border: none; font-size: 16px; cursor: pointer;">
+      ✖
+    </button>
+    <div [innerHTML]="contenidoMensaje"></div>
+  </div>
+
   <div id="error-container" class="error-container" style="display: none;">
     <button id="close-btn" class="close-btn" onclick="cerrarErrores()">X</button>
     <strong>Errores encontrados:</strong>

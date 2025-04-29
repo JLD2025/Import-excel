@@ -49,6 +49,7 @@ export class ExcelImporterComponent implements OnInit {
   idBien: number | null = null;
 
   mensajeVisible: boolean = false;
+  mensajeLote: boolean = false;
   contenidoMensaje: string = '';
   estiloMensaje: any = {};
 
@@ -276,7 +277,7 @@ export class ExcelImporterComponent implements OnInit {
   }
   
   mostrarLote(mensaje: string) {
-    this.mensajeVisible = true;
+    this.mensajeLote = true;
   
     const regex = /^(.*?)\s*(\[.*\])$/s;
     const match = mensaje.match(regex);
@@ -402,7 +403,7 @@ export class ExcelImporterComponent implements OnInit {
         <tr><td style="border: 1px solid #ddd; padding: 8px;">FFinProcesadoAltaLote</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
       </tbody>
     </table>
-  `;
+    `;
 
   
     this.estiloMensaje = {
@@ -418,10 +419,11 @@ export class ExcelImporterComponent implements OnInit {
       padding: '10px',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
     };
-}
+  } 
 
   cerrarMensaje() {
     this.mensajeVisible = false;
+    this.mensajeLote = false;
   }
 
   onCellEdit(event: any, rowIndex: number, colIndex: number): void {
