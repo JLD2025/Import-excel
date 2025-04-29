@@ -64,16 +64,11 @@ export class ExcelImporterComponent implements OnInit {
     const data = this.historyService.getHistoryState();
   
     if (data) {
-      // Convertir los datos de manera estructurada y legible
-      const mensaje = 'Conexión exitosa: <br>';
-      
       // Si los datos son un objeto o array, lo convertimos a un formato amigable
-      let dataMessage = '';
-  
-      dataMessage = data.toString();
+      let dataMessage = data.toString();
   
       // Llamamos a mostrarLote pasando el mensaje completo
-      this.mostrarLote(mensaje + dataMessage);
+      this.mostrarLote(dataMessage);
     }
   }  
 
@@ -323,7 +318,7 @@ export class ExcelImporterComponent implements OnInit {
             `;
           }).join('');
         } else {
-          filasHtml = '<p style="text-align: center;">No hay datos para mostrar.</p>';
+         alert("No hay datos para mostrar");
         }
       } catch (e) {
         filasHtml = `<p style="color: red; text-align: center;">Error al parsear los datos.</p>`;
@@ -336,84 +331,70 @@ export class ExcelImporterComponent implements OnInit {
     <div style="margin-bottom: 1rem; text-align: center;">
       <strong>${encabezado}</strong>
     </div>
-    <table style="width: 100%; border-collapse: collapse;">
+    <table style="width: 100%; border-collapse: collapse; border: 2px solid black;">
       <thead>
         <tr>
-          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Encabezado</th>
-          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Valor</th>
+          <th style="border: 1px solid black; padding: 8px; text-align: left;">Encabezado</th>
+          <th style="border: 1px solid black; padding: 8px; text-align: left;">Valor</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">LoteId</td><td style="border: 1px solid #ddd; padding: 8px;">692</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">NomLote</td><td style="border: 1px solid #ddd; padding: 8px;">LOTE 20220228 AvalCanarias</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ClienteId</td><td style="border: 1px solid #ddd; padding: 8px;">501</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">RequiereJustificacionValor</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">SituacionId</td><td style="border: 1px solid #ddd; padding: 8px;">1</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">EmailResponsable</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">CasoLectura</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ReferenciaINI</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ReferenciaFIN</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">EvitarSupSuperior</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">BorrarNotaKO</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">NotificarIncidencia</td><td style="border: 1px solid #ddd; padding: 8px;">1</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ResponsableSupervisorIncidencia</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">SolicitarNotaSimple</td><td style="border: 1px solid #ddd; padding: 8px;">true</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">IncidenciaFaltaNotaSimple</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ProcesarRespuestaValmesaRolId</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">TextoAlertaCorreoNotificacionTecnico</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">DocumentoIdInstruccionTecnico</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">TextoAlertaCorreoNotificacionCC</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">DocumentoIdInstruccionCC</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FechaEntrega</td><td style="border: 1px solid #ddd; padding: 8px;">2022-03-23T00:00:00.000Z</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">IncentivoCC</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">IncentivoTecExt</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">IncentivoTecExtRustica</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">PrecioNotaSimple</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">SubclienteId</td><td style="border: 1px solid #ddd; padding: 8px;">9850</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FinalidadId</td><td style="border: 1px solid #ddd; padding: 8px;">27</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">EncargoObservacion</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ContactoObservacion</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">TipoVisitaId</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">NifTitular</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ClienteMecanizadoId</td><td style="border: 1px solid #ddd; padding: 8px;">501</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">SituacionIdEncargo</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">TipoEncargoId</td><td style="border: 1px solid #ddd; padding: 8px;">10</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">CopiaExpedienteAnterior</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">DelegacionIdPropietaria</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">NifUsuario</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ConsultaResultadoLoteId</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">TipoAccionMensajeriaId</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">Proyecto</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">TextoObservacion</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">CargaCuadroMando</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">RequierePVC</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ControlFechaExpedicionConFechaLimite</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FechaRecepcionLote</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FechaProcesadoLote</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FechaEntregaCliente</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">VersionLote</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FechaCreacionLote</td><td style="border: 1px solid #ddd; padding: 8px;">2022-02-28T14:57:10.460Z</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ActivarVPV</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">ActivarAsignaAutoTEX</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FechaEntregaReal</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">BacktestingId</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FechaEntregaLimite</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">PrioridadId</td><td style="border: 1px solid #ddd; padding: 8px;">692</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FPeticionLote</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
-        <tr><td style="border: 1px solid #ddd; padding: 8px;">FFinProcesadoAltaLote</td><td style="border: 1px solid #ddd; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">LoteId</td><td style="border: 1px solid black; padding: 8px;">692</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">NomLote</td><td style="border: 1px solid black; padding: 8px;">LOTE 20220228 AvalCanarias</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ClienteId</td><td style="border: 1px solid black; padding: 8px;">501</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">RequiereJustificacionValor</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">SituacionId</td><td style="border: 1px solid black; padding: 8px;">1</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">EmailResponsable</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">CasoLectura</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ReferenciaINI</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ReferenciaFIN</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">EvitarSupSuperior</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">BorrarNotaKO</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">NotificarIncidencia</td><td style="border: 1px solid black; padding: 8px;">1</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ResponsableSupervisorIncidencia</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">SolicitarNotaSimple</td><td style="border: 1px solid black; padding: 8px;">true</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">IncidenciaFaltaNotaSimple</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ProcesarRespuestaValmesaRolId</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">TextoAlertaCorreoNotificacionTecnico</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">DocumentoIdInstruccionTecnico</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">TextoAlertaCorreoNotificacionCC</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">DocumentoIdInstruccionCC</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">FechaEntrega</td><td style="border: 1px solid black; padding: 8px;">2022-03-23T00:00:00.000Z</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">IncentivoCC</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">IncentivoTecExt</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">IncentivoTecExtRustica</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">PrecioNotaSimple</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">SubclienteId</td><td style="border: 1px solid black; padding: 8px;">9850</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">FinalidadId</td><td style="border: 1px solid black; padding: 8px;">27</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">EncargoObservacion</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ContactoObservacion</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">TipoVisitaId</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">NifTitular</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ClienteMecanizadoId</td><td style="border: 1px solid black; padding: 8px;">501</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">SituacionIdEncargo</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">TipoEncargoId</td><td style="border: 1px solid black; padding: 8px;">10</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">CopiaExpedienteAnterior</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">DelegacionIdPropietaria</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">NifUsuario</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ConsultaResultadoLoteId</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">TipoAccionMensajeriaId</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">Proyecto</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">TextoObservacion</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">CargaCuadroMando</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">RequierePVC</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">ControlFechaExpedicionConFechaLimite</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">FechaRecepcionLote</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">FechaProcesadoLote</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
+        <tr><td style="border: 1px solid black; padding: 8px;">FechaEntregaCliente</td><td style="border: 1px solid black; padding: 8px;">null</td></tr>
       </tbody>
     </table>
     `;
-
   
     this.estiloMensaje = {
       width: 'auto',
-      height: '900px',
+      height: '290px',
       overflowX: 'auto',
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      transform: 'translate(-208%, -155%)',
       border: '1px solid black',
       background: 'white',
       padding: '10px',
