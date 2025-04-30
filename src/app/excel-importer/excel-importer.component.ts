@@ -125,9 +125,15 @@ export class ExcelImporterComponent implements OnInit {
 
       this.sheetNames = this.workbook.SheetNames; //Esta parte sirve para obtener los nombres de las hojas por la cuál se compone un excel.
 
-      if(this.sheetNames.length > 0){
-        this.loadSheet(0); //Empezar por la primera hoja por defecto
-      }
+       // Pedir al usuario el nombre de la hoja a cargar
+       const sheetName = prompt("Selecciona el nombre de la hoja:", this.sheetNames.join(', '));
+      
+       if (sheetName && this.sheetNames.includes(sheetName)) {
+         const index = this.sheetNames.indexOf(sheetName);
+         this.loadSheet(index); // Cargar la hoja seleccionada
+       } else {
+         alert("La hoja no existe o no se seleccionó ninguna.");
+       }
      
     };
 

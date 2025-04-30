@@ -50,7 +50,7 @@
 
 .table-container {
     width: 100vw;
-    height: 60vh; /* Ajustable */
+    height: 68vh;
     overflow-x: auto; 
     overflow-y: auto;
     border: 1px solid black; 
@@ -61,7 +61,7 @@
 
 table {
     width: 100%;
-    table-layout: auto; /* Mantiene columnas equilibradas */
+    table-layout: auto;
     border-collapse: collapse;
 }
 
