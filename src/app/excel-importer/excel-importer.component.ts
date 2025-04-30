@@ -65,30 +65,39 @@ export class ExcelImporterComponent implements OnInit {
     const data = this.historyService.getHistoryState();
   
     if (data) {
-      // Convertir los datos de manera estructurada y legible
-      const mensaje = 'Conexión exitosa: <br>';
       
-      // Si los datos son un objeto o array, lo convertimos a un formato amigable
       let dataMessage = '';
+  
       if (Array.isArray(data)) {
+        // Si es un array, procesamos cada ítem
         dataMessage = data.map((item) => {
           return Object.entries(item).map(([key, value]) => {
             return `<strong>${key}:</strong> ${value}`;
           }).join('<br/>');
         }).join('<br/>');
       } else if (typeof data === 'object') {
+        // Si es un objeto, procesamos sus claves y valores
         dataMessage = Object.entries(data).map(([key, value]) => {
           return `<strong>${key}:</strong> ${value}`;
         }).join('<br/>');
       } else {
-        // Si no es un objeto ni un array, simplemente convertimos a string
+        // Si no es un objeto ni un array, lo convertimos a string
         dataMessage = data.toString();
       }
   
-      // Llamamos a mostrarLote pasando el mensaje completo
-      this.mostrarLote(mensaje + dataMessage);
+      const mensajeCompleto = dataMessage;
+  
+      const lineas = mensajeCompleto.split('<br/>');
+  
+      const primerasLineas = lineas.slice(0, 3);
+  
+      const ultimaLinea = lineas[lineas.length - 1];
+  
+      const mensajeFinal = [...primerasLineas, ultimaLinea].join('<br/>');
+  
+      this.mostrarLote(mensajeFinal);
     }
-  }  
+  }   
 
   updateTime(){
     this.getCurrentDate();
@@ -291,8 +300,8 @@ export class ExcelImporterComponent implements OnInit {
   
   mostrarLote(mensaje: string) {
     this.mensajeLote = true;
-    const encabezado = `✅ ${mensaje.split("\n")[0]}`;  // Usar la primera línea como encabezado
-    const filasHtml = mensaje.split("\n").slice(1).map(line => {
+    const encabezado = `✅ Conexión exitosa al siguiente lote: `;
+    const filasHtml = mensaje.split("<br/>").slice(0).map(line => {
       return `<div style="font-family: monospace; text-align: left; margin: 5px 0;">
                 ${line}
               </div>`;
@@ -302,21 +311,21 @@ export class ExcelImporterComponent implements OnInit {
       <div style="margin-bottom: 1rem; text-align: center;">
         <strong>${encabezado}</strong>
       </div>
-      ${filasHtml || '<p style="text-align: center;">No hay datos para mostrar.</p>'}
+      ${filasHtml}
     `;
   
     this.estiloMensaje = {
-      width: '20%',
-      height: '280px',
+      width: '16%',
+      height: '100px',
       overflowX: 'auto',
-      transform: 'translate(-237%, -158%)',
+      transform: 'translate(-260%, -290%)',
       position: 'fixed',  
       top: '50%',        
       left: '50%',
       border: '1px solid black',
       background: 'white',
-      padding: '10px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+      padding: '20px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     };
   }
 
