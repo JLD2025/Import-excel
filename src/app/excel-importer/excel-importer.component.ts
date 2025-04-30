@@ -291,78 +291,34 @@ export class ExcelImporterComponent implements OnInit {
   
   mostrarLote(mensaje: string) {
     this.mensajeLote = true;
-  
-    const regex = /^(.*?)\s*(\[.*\])$/s;
-    const match = mensaje.match(regex);
-  
-    let encabezado = '✅ ';
-    let filasHtml = '';
-  
-    if (match) {
-      encabezado += match[1];
-      try {
-        const data: Record<string, any>[] = JSON.parse(match[2]);
-  
-        if (Array.isArray(data) && data.length > 0) {
-          // Crear una fila con cada clave-valor
-          const filas = data.map((obj: Record<string, any>) =>
-            Object.keys(obj).reduce((acc: Record<string, any>, key: string) => {
-              let value = obj[key];
-              // Si es null, undefined o vacío, mostrarlo explícitamente
-              if (value === null) {
-                acc[key] = `"null"`;
-              } else if (value === undefined) {
-                acc[key] = `"undefined"`;
-              } else if (value === '') {
-                acc[key] = `"empty"`;
-              } else {
-                acc[key] = value.toString();  // Convertir el valor a string
-              }
-              return acc;
-            }, {})
-          );
-  
-          // Crear el HTML con los datos sin formatearlos como JSON
-          filasHtml = filas.map(obj => {
-            // Construir una presentación en forma de lista de clave-valor
-            const formattedObj = Object.entries(obj).map(([key, value]) => {
-              return `<strong>${key}:</strong> ${value}`;
-            }).join('<br/>');
-            
-            return `
-              <div style="font-family: monospace; text-align: left; margin: 10px 0;">
-                ${formattedObj}
-              </div>
-            `;
-          }).join('');
-        } else {
-          filasHtml = '<p style="text-align: center;">No hay datos para mostrar.</p>';
-        }
-      } catch (e) {
-        filasHtml = `<p style="color: red; text-align: center;">Error al parsear los datos.</p>`;
-      }
-    } else {
-      encabezado += mensaje;
-    }
+    const encabezado = `✅ ${mensaje.split("\n")[0]}`;  // Usar la primera línea como encabezado
+    const filasHtml = mensaje.split("\n").slice(1).map(line => {
+      return `<div style="font-family: monospace; text-align: left; margin: 5px 0;">
+                ${line}
+              </div>`;
+    }).join('');
   
     this.contenidoMensajeLote = `
       <div style="margin-bottom: 1rem; text-align: center;">
         <strong>${encabezado}</strong>
       </div>
-      ${filasHtml}
+      ${filasHtml || '<p style="text-align: center;">No hay datos para mostrar.</p>'}
     `;
   
     this.estiloMensaje = {
-      width: 'auto',
+      width: '20%',
       height: '280px',
       overflowX: 'auto',
       transform: 'translate(-237%, -158%)',
+      position: 'fixed',  
+      top: '50%',        
+      left: '50%',
       border: '1px solid black',
       background: 'white',
       padding: '10px',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
     };
-}
+  }
 
   cerrarMensaje() {
     this.mensajeVisible = false;
