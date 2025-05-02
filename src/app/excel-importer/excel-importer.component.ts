@@ -337,19 +337,18 @@ export class ExcelImporterComponent implements OnInit {
 
   cerrarMensaje() {
     this.mensajeVisible = false;
-    //this.mensajeLote = false
   }
 
   onCellEdit(event: any, rowIndex: number, colIndex: number): void {
     const newValue = event.target.innerText.trim();
-    // Verificar que el nuevo valor no esté vacío antes de asignarlo
+   
     if (newValue === '') {
-      this.excelData[rowIndex] = [...this.excelData[rowIndex]]; // Crear una nueva referencia para la fila
-      this.excelData[rowIndex][colIndex] = '';  // Dejar la celda vacía
+      this.excelData[rowIndex] = [...this.excelData[rowIndex]];
+      this.excelData[rowIndex][colIndex] = ''; 
     } else {
-        // Si el valor no es vacío, actualizamos normalmente
-        this.excelData[rowIndex] = [...this.excelData[rowIndex]]; // Crear una nueva referencia para la fila
-        this.excelData[rowIndex][colIndex] = newValue;  // Actualizar la celda específica
+       
+        this.excelData[rowIndex] = [...this.excelData[rowIndex]]; 
+        this.excelData[rowIndex][colIndex] = newValue; 
     }
   } 
 
@@ -418,7 +417,7 @@ export class ExcelImporterComponent implements OnInit {
       const contieneProvincia = fila.some((celda : any) => celda?.toString().toLowerCase().includes(provincia));
   
       if (contieneMunicipio && contieneProvincia) {
-        filasCoincidentes.push(index); // Sumar 1 si quieres mostrar la fila como número humano (no índice)
+        filasCoincidentes.push(index); 
       }
     });
   
@@ -472,13 +471,12 @@ export class ExcelImporterComponent implements OnInit {
   
     const referencia = this.referenciaIngresado.toLowerCase();
   
-    // Buscar en excelData
     const filasCoincidentes: number[] = [];
     this.excelData.forEach((fila, index) => {
       const contieneReferencia = fila.some((celda : any) => celda?.toString().toLowerCase().includes(referencia));
   
       if (contieneReferencia) {
-        filasCoincidentes.push(index); // Sumar 1 si quieres mostrar la fila como número humano (no índice)
+        filasCoincidentes.push(index); 
       }
     });
   
@@ -493,7 +491,7 @@ export class ExcelImporterComponent implements OnInit {
       const coincidenciasDetalles: string[] = filasCoincidentes.map((index) => {
       const fila = this.excelData[index];
   
-        // Suponiendo que las columnas "Tipo Registro", "Localidad Registro", "Nº Registro"
+       
         const tipoRegistro = fila[12]; 
         const localidadRegistro = fila[13]; 
         const numeroRegistro = fila[14]; 
@@ -544,7 +542,6 @@ export class ExcelImporterComponent implements OnInit {
         const coincidenciasDetalles: string[] = filasCoincidentes.map((index) => {
         const fila = this.excelData[index];
     
-          // Suponiendo que las columnas "Tipo Registro", "Localidad Registro", "Nº Registro"
           const tipo = fila[5]; 
           const descripcionTipoBien = fila[6]; 
           const domicilioBien = fila[7]; 
@@ -552,86 +549,83 @@ export class ExcelImporterComponent implements OnInit {
           return `Fila ${index}: Id. bien: ${bien}, Tipo: ${tipo}, Localidad Registro: ${descripcionTipoBien}, Nº Registro: ${domicilioBien}`;
         });
 
-        // Mostrar las coincidencias encontradas con los detalles de las columnas
+      
         this.mostrarMensaje(`Coincidencias encontradas:\n${coincidenciasDetalles.join('\n')}`);
     }
   
   }
 
-  // Función para generar el encargo con los datos seleccionados
+ 
   generarEncargo() {
     if (this.selectedRowIndex !== null) {
-      // Obtener la fila seleccionada
+     
       const filaSeleccionada = this.excelData[this.selectedRowIndex];
 
-      // Aquí puedes extraer los datos relevantes de la fila
-      // Por ejemplo, si tienes una columna de "Referencia Catastral" en la columna 0
       const referenciaCatastral = filaSeleccionada[11];
-      const idBien = filaSeleccionada[4]; // Suponiendo que la segunda columna sea el id del bien
+      const idBien = filaSeleccionada[4];
 
-      // Usar los datos para generar el encargo
       this.procesarGeneracionEncargo(referenciaCatastral, idBien);
     } else {
-      // Si no hay ninguna fila seleccionada
+     
       this.mensajeVisible = true;
       this.contenidoMensaje = 'Por favor selecciona una fila para generar el encargo.';
       this.estiloMensaje = { color: 'red' , position: "absolute", top:"380px", border: "1px solid black", background: "white" };
     }
   }
 
-  // Procesar la generación del encargo (creando el PDF)
-procesarGeneracionEncargo(referenciaCatastral: string, idBien: string) {
-  // Crear una nueva instancia de jsPDF
-  const doc = new jsPDF();
+  
+  procesarGeneracionEncargo(referenciaCatastral: string, idBien: string) {
+    // Crear una nueva instancia de jsPDF
+    const doc = new jsPDF();
 
-  // Agregar el encabezado
-  doc.setFontSize(22);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Encargo de Inscripción Catastral', 20, 20);
+    // Agregar el encabezado
+    doc.setFontSize(22);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Encargo de Inscripción Catastral', 20, 20);
 
-  // Agregar la fecha de emisión
-  const fechaEmision = new Date();
-  const fechaTexto = `${fechaEmision.getDate()}/${fechaEmision.getMonth() + 1}/${fechaEmision.getFullYear()}`;
-  doc.setFontSize(12);
-  doc.setFont('helvetica', 'normal');
-  doc.text(`Fecha de Emisión: ${fechaTexto}`, 20, 30);
+    // Agregar la fecha de emisión
+    const fechaEmision = new Date();
+    const fechaTexto = `${fechaEmision.getDate()}/${fechaEmision.getMonth() + 1}/${fechaEmision.getFullYear()}`;
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Fecha de Emisión: ${fechaTexto}`, 20, 30);
 
-  // Agregar los datos del encargo
-  doc.setFontSize(14);
-  doc.text('Datos del Encargo:', 20, 40);
+    // Agregar los datos del encargo
+    doc.setFontSize(14);
+    doc.text('Datos del Encargo:', 20, 40);
 
-  doc.setFontSize(12);
-  doc.text(`Referencia Catastral: ${referenciaCatastral}`, 20, 50);
-  doc.text(`Id. Bien: ${idBien}`, 20, 55);
+    doc.setFontSize(12);
+    doc.text(`Referencia Catastral: ${referenciaCatastral}`, 20, 50);
+    doc.text(`Id. Bien: ${idBien}`, 20, 55);
 
-  // Agregar detalles adicionales
-  doc.text('Detalles del Encargo:', 20, 70);
-  doc.text('El encargo tiene como objetivo proceder con la inscripción catastral del bien.', 20, 80);
-  doc.text('El plazo para completar el proceso es de 30 días hábiles a partir de la fecha de emisión.', 20, 85);
+    // Agregar detalles adicionales
+    doc.text('Detalles del Encargo:', 20, 70);
+    doc.text('El encargo tiene como objetivo proceder con la inscripción catastral del bien.', 20, 80);
+    doc.text('El plazo para completar el proceso es de 30 días hábiles a partir de la fecha de emisión.', 20, 85);
 
-  // Agregar la firma
-  doc.text('Firma del Responsable:', 20, 100);
-  doc.text('____________________________________', 20, 105); // Línea para la firma
+    // Agregar la firma
+    doc.text('Firma del Responsable:', 20, 100);
+    doc.text('____________________________________', 20, 105); // Línea para la firma
 
-  // Agregar un pie de página
-  doc.setFontSize(10);
-  doc.text('Este documento es confidencial y está destinado exclusivamente para el proceso de inscripción catastral.', 20, 200);
+    // Agregar un pie de página
+    doc.setFontSize(10);
+    doc.text('Este documento es confidencial y está destinado exclusivamente para el proceso de inscripción catastral.', 20, 200);
 
-  // Guardar el archivo PDF
-  try {
-    doc.save(`Encargo_Inscripcion_Catastral_${referenciaCatastral}.pdf`);
-    
-    // Si todo sale bien, mostrar mensaje de éxito
-    this.mensajeVisible = true;
-    this.contenidoMensaje = `¡Encargo generado con éxito para la referencia catastral ${referenciaCatastral}!`;
-    this.estiloMensaje = { color: 'green' };
-  } catch (error) {
-    // Si hay un error, mostrar mensaje de error
-    this.mensajeVisible = true;
-    this.contenidoMensaje = 'Hubo un error al generar el encargo. Intenta nuevamente.';
-    this.estiloMensaje = { color: 'red' };
+    // Guardar el archivo PDF
+    try {
+      doc.save(`Encargo_Inscripcion_Catastral_${referenciaCatastral}.pdf`);
+      
+      // Si todo sale bien, mostrar mensaje de éxito
+      this.mensajeVisible = true;
+      this.contenidoMensaje = `¡Encargo generado con éxito para la referencia catastral ${referenciaCatastral}!`;
+      this.estiloMensaje = { color: 'green' };
+    } catch (error) {
+      // Si hay un error, mostrar mensaje de error
+      this.mensajeVisible = true;
+      this.contenidoMensaje = 'Hubo un error al generar el encargo. Intenta nuevamente.';
+      this.estiloMensaje = { color: 'red' };
+    }
   }
-}
 
   toggleVentana(nombre: string) {
     this.estadoVentana = this.estadoVentana === nombre ? null : nombre;
