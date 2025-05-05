@@ -53,6 +53,7 @@ export class ExcelImporterComponent implements OnInit {
   contenidoMensaje: string = '';
   contenidoMensajeLote: string = '';
   estiloMensaje: any = {};
+  estiloMensajeLote: any = {};
 
   selectedRowIndex: number | null = null;
   selectedRowData: string | null = null;
@@ -320,18 +321,23 @@ export class ExcelImporterComponent implements OnInit {
       ${filasHtml}
     `;
   
-    this.estiloMensaje = {
+    this.estiloMensajeLote = {
       width: '16%',
       height: '100px',
       overflowX: 'auto',
-      transform: 'translate(-260%, -290%)',
-      position: 'fixed',  
-      top: '50%',        
-      left: '50%',
       border: '1px solid black',
       background: 'white',
       padding: '20px',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-270%, -250%)',
+      maxWidth: '1300px',
+      borderRadius: '6px',
+      zIndex: '1000',
+      fontFamily: 'sans-serif',
+      fontSize: 'small',
     };
   }
 
@@ -565,11 +571,6 @@ export class ExcelImporterComponent implements OnInit {
       const idBien = filaSeleccionada[4];
 
       this.procesarGeneracionEncargo(referenciaCatastral, idBien);
-    } else {
-     
-      this.mensajeVisible = true;
-      this.contenidoMensaje = 'Por favor selecciona una fila para generar el encargo.';
-      this.estiloMensaje = { color: 'red' , position: "absolute", top:"380px", border: "1px solid black", background: "white" };
     }
   }
 

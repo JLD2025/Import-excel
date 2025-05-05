@@ -233,7 +233,7 @@ table {
     cursor: pointer;
 }
 
-.ventana-mensaje {
+.ventana-mensaje{
     position: fixed;
     top: 50%;
     left: 50%;
