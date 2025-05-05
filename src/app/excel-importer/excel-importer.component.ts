@@ -322,23 +322,21 @@ export class ExcelImporterComponent implements OnInit {
     `;
   
     this.estiloMensajeLote = {
-      width: '16%',
+      width: '300px', // Fijo y suficiente
       height: '100px',
       overflowX: 'auto',
       border: '1px solid black',
       background: 'white',
-      padding: '20px',
+      padding: '5px',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-270%, -250%)',
-      maxWidth: '1300px',
+      top: '20px', // Espacio desde arriba
+      left: '20px', // Espacio desde la izquierda
       borderRadius: '6px',
-      zIndex: '1000',
+      zIndex: '999',
       fontFamily: 'sans-serif',
       fontSize: 'small',
-    };
+    };    
   }
 
   cerrarMensaje() {
