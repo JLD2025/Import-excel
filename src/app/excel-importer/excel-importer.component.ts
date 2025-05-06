@@ -55,8 +55,8 @@ export class ExcelImporterComponent implements OnInit {
   estiloMensaje: any = {};
   estiloMensajeLote: any = {};
 
-  selectedRowIndex: number | null = null;
-  selectedRowData: string | null = null;
+  selectedRowIndex: number [] = [];
+  selectedRowData: any [] = [];
 
   constructor(private historyService: HistoryService) {}
   
@@ -357,12 +357,14 @@ export class ExcelImporterComponent implements OnInit {
   } 
 
   onRowClick(index: number){
-    if(this.selectedRowIndex === index){
-      this.selectedRowIndex = null;
-      this.selectedRowData = null;
+    const isSelected = this.selectedRowIndex.includes(index);
+
+    if (isSelected) {
+    this.selectedRowIndex = this.selectedRowIndex.filter(item => item !== index);
+    this.selectedRowData = this.selectedRowData.filter((_, idx) => idx !== index);
     }else{
-      this.selectedRowIndex = index;
-      this.selectedRowData = this.excelData[index];
+      this.selectedRowIndex.push(index);
+      this.selectedRowData.push(this.excelData[index]);
     }
   }
 
@@ -559,20 +561,20 @@ export class ExcelImporterComponent implements OnInit {
   
   }
 
- 
   generarEncargo() {
-    if (this.selectedRowIndex !== null) {
-     
-      const filaSeleccionada = this.excelData[this.selectedRowIndex];
-
-      const referenciaCatastral = filaSeleccionada[11];
-      const idBien = filaSeleccionada[4];
-
-      this.procesarGeneracionEncargo(referenciaCatastral, idBien);
-    }
-  }
-
+    if (this.selectedRowIndex.length === 1) {
+      
+      const filaSeleccionada = this.excelData[this.selectedRowIndex[0]];  
   
+      const referenciaCatastral = filaSeleccionada[11];  
+      const idBien = filaSeleccionada[4];
+  
+      this.procesarGeneracionEncargo(referenciaCatastral, idBien);
+    } else {
+      console.log('Por favor, selecciona exactamente una fila para generar el encargo.');
+    }
+  }  
+
   procesarGeneracionEncargo(referenciaCatastral: string, idBien: string) {
     // Crear una nueva instancia de jsPDF
     const doc = new jsPDF();

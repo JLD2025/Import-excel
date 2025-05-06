@@ -117,8 +117,8 @@
   <div class="styles">
     <div class="table-container">
       <table *ngIf="excelData.length > 0">
-        <tr *ngFor="let row of excelData; let rowIndex = index"n (click)="onRowClick(rowIndex)" [class.selected-row]="selectedRowIndex === rowIndex">
-          <td *ngFor="let cell of row; let colIndex = index" contenteditable="true" (blur)="onCellEdit($event, rowIndex, colIndex)">
+        <tr *ngFor="let row of excelData; let rowIndex = index"n (click)="onRowClick(rowIndex)" [class.selected-row]="selectedRowIndex.includes(rowIndex)">
+          <td *ngFor="let cell of row; let colIndex = index" contenteditable="true" (dblclick)="onCellEdit($event, rowIndex, colIndex)">
            {{cell}}
           </td>
         </tr>
