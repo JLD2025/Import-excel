@@ -5,27 +5,32 @@
   <p class="date-time">Fecha y Hora Actual: {{ currentDate }}</p>
 
   <div class="action-buttons">
-    <button class="boton" (click)="toggleVentana('guardar')">Guardar Cambios</button>
+    <button class="boton" (click)="toggleVentana('guardar')">
+      Guardar Cambios
+    </button>
     <button class="boton" (click)="revisarControlesIniciales()">
-      <i></i>Revisión de controles
+      Revisión de controles
     </button>
     <button class="boton" (click)="toggleVentana('buscador')">
-      <i></i>Localizar municipio y provincia
+      Localizar municipio y provincia
     </button>
     <button class="boton" (click)="toggleVentana('registros')">
-      <i></i>Localizar registros
+      Localizar registros
+    </button>
+    <button class="boton primary">
+      Grabar Campos del Excel
     </button>
     <button class="boton" (click)="onBuscarAntecedentes()">
-      <i></i>Búsqueda de antecedentes
+      Búsqueda de antecedentes
     </button>
     <button class="boton" (click)="toggleVentana('tiposBien')">
-      <i></i>Búsqueda tipos de bien
+      Búsqueda tipos de bien
     </button>
-    <button class="boton primary" (click)="toggleVentana('generarEncargo')">
-      <i></i>Generar Encargo
+    <button class="boton" (click)="toggleVentana('generarEncargo')">
+      Generar Encargo
     </button>
     <button class="boton">
-      <i></i>Copiar antecedentes
+      Copiar antecedentes
     </button>
   </div>
 

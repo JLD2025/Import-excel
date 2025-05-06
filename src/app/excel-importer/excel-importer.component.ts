@@ -322,16 +322,17 @@ export class ExcelImporterComponent implements OnInit {
     `;
   
     this.estiloMensajeLote = {
-      width: '300px', // Fijo y suficiente
+      width: '300px',
       height: '100px',
       overflowX: 'auto',
       border: '1px solid black',
       background: 'white',
-      padding: '5px',
+      paddingLeft: '45px',
+      paddingTop: '5px',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       position: 'fixed',
-      top: '20px', // Espacio desde arriba
-      left: '20px', // Espacio desde la izquierda
+      top: '20px', 
+      left: '20px',
       borderRadius: '6px',
       zIndex: '999',
       fontFamily: 'sans-serif',
