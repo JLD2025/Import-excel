@@ -99,6 +99,31 @@
     </div>
   </div>
 
+  <div class="field-mapping-container">
+    <p class="field-mapping-title">Asignación de Campos</p>
+    <table class="field-mapping-table">
+      <thead>
+        <tr>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mapping of fieldMappings; let i = index">
+          <td>{{ mapping.origen }}</td>
+          <td>
+            <select [(ngModel)]="mapping.destino">
+              <option value="">-- Omitir --</option>
+              <option *ngFor="let col of columnasDestino" [value]="col">{{ col }}</option>
+            </select>
+          </td>
+          <td>{{ mapping.tipo }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>  
+
   <div *ngIf="mensajeVisible" [ngStyle]="estiloMensaje" class="ventana-mensaje">
     <button (click)="cerrarMensaje()" 
           style="position: absolute; top: 0; right: 0; background: transparent; border: none; font-size: 16px; cursor: pointer;">

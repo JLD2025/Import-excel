@@ -18,12 +18,14 @@
 .date-time{
     position: absolute;
     top: 0;
-    right: 10px;
+    left: 10px;
     background: white;
     padding: 10px;
     margin-left: 10px;
     border-radius: 30px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    width: 325px;
+    text-align: center;
 }
 
 .boton{
@@ -250,3 +252,42 @@ table {
 .selected-row{
     background-color: #d0eaff;
 }
+
+/*/////////////////////////////////////*/
+
+.field-mapping-container {
+    margin-right: 0px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: auto;
+    height: 289px;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    overflow-y: auto;
+}
+  
+.field-mapping-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+  
+.field-mapping-table {
+    width: auto;
+    border-collapse: collapse;
+}
+  
+.field-mapping-table th,
+.field-mapping-table td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: left;
+}
+  
+.field-mapping-table select {
+    width: auto;
+}  

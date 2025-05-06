@@ -44,6 +44,32 @@ export class ExcelImporterComponent implements OnInit {
     'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'
   ];
 
+  fieldMappings = [
+    { origen: 'Encargo', destino: '', tipo: '' },
+    { origen: 'Expediente', destino: '', tipo: '' },
+    { origen: 'S/Referencia', destino: '', tipo: '' },
+    { origen: 'Nº Acuerdo', destino: '', tipo: '' },
+    { origen: 'Id. Bien', destino: '', tipo: '' },
+    { origen: 'Tipo', destino: '', tipo: '' },
+    { origen: 'Descripción tipo Bien', destino: '', tipo: '' },
+    { origen: 'Domicilio Bien', destino: '', tipo: '' },
+    { origen: 'Código Postal', destino: '', tipo: '' },
+    { origen: 'Localidad', destino: '', tipo: '' },
+    { origen: 'Provincia', destino: '', tipo: '' },
+    { origen: 'Referencia Catastral', destino: '', tipo: '' },
+    { origen: 'Tipo Registro', destino: '', tipo: '' },
+    { origen: 'Localidad Registro', destino: '', tipo: '' },
+    { origen: 'Nº Registro', destino: '', tipo: '' },
+    { origen: 'Nº Inscripcion', destino: '', tipo: '' },
+    { origen: 'Tomo', destino: '', tipo: '' },
+    { origen: 'Libro', destino: '', tipo: '' },
+    { origen: 'Folio', destino: '', tipo: '' },
+    { origen: 'Nº Finca', destino: '', tipo: '' },
+    { origen: 'Tasadora actual', destino: '', tipo: '' },
+  ];
+  
+  columnasDestino = ['Encargo', 'Expediente', 'Acuerdo', 'Municipio', 'Provincia', 'IdBien', 'ReferenciaCatastral', 'TipoRegistro', 'Registro', 'Inscripcion', 'Finca', 'Tasadora'];  
+
   estadoVentana: string | null = null;
   referenciaIngresado: string = "";
   idBien: number | null = null;
@@ -331,7 +357,7 @@ export class ExcelImporterComponent implements OnInit {
       paddingTop: '5px',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       position: 'fixed',
-      top: '20px', 
+      top: '140px', 
       left: '20px',
       borderRadius: '6px',
       zIndex: '999',
