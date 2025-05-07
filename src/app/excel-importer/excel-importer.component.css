@@ -262,7 +262,7 @@ table {
     padding: 5px;
     border-radius: 5px;
     background-color: #f9f9f9;
-    width: auto;
+    width: 450px;
     height: 289px;
     position: absolute;
     top: 0;
@@ -277,7 +277,7 @@ table {
 }
   
 .field-mapping-table {
-    width: auto;
+    width: 435px;
     border-collapse: collapse;
 }
   
@@ -286,6 +286,7 @@ table {
     border: 1px solid #ccc;
     padding: 0.5rem;
     text-align: left;
+    width: 100px;
 }
   
 .field-mapping-table select {

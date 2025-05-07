@@ -45,27 +45,27 @@ export class ExcelImporterComponent implements OnInit {
   ];
 
   fieldMappings = [
-    { origen: 'Encargo', destino: '', tipo: '' },
-    { origen: 'Expediente', destino: '', tipo: '' },
-    { origen: 'S/Referencia', destino: '', tipo: '' },
-    { origen: 'Nº Acuerdo', destino: '', tipo: '' },
-    { origen: 'Id. Bien', destino: '', tipo: '' },
-    { origen: 'Tipo', destino: '', tipo: '' },
-    { origen: 'Descripción tipo Bien', destino: '', tipo: '' },
-    { origen: 'Domicilio Bien', destino: '', tipo: '' },
-    { origen: 'Código Postal', destino: '', tipo: '' },
-    { origen: 'Localidad', destino: '', tipo: '' },
-    { origen: 'Provincia', destino: '', tipo: '' },
-    { origen: 'Referencia Catastral', destino: '', tipo: '' },
-    { origen: 'Tipo Registro', destino: '', tipo: '' },
-    { origen: 'Localidad Registro', destino: '', tipo: '' },
-    { origen: 'Nº Registro', destino: '', tipo: '' },
-    { origen: 'Nº Inscripcion', destino: '', tipo: '' },
-    { origen: 'Tomo', destino: '', tipo: '' },
-    { origen: 'Libro', destino: '', tipo: '' },
-    { origen: 'Folio', destino: '', tipo: '' },
-    { origen: 'Nº Finca', destino: '', tipo: '' },
-    { origen: 'Tasadora actual', destino: '', tipo: '' },
+    { origen: 'Encargo', valor: '', destino: '' },
+    { origen: 'Expediente', valor: '', destino: ''},
+    { origen: 'S/Referencia', valor: '', destino: ''},
+    { origen: 'Nº Acuerdo', valor: '', destino: ''},
+    { origen: 'Id. Bien', valor: '', destino: ''},
+    { origen: 'Tipo', valor: '', destino: ''},
+    { origen: 'Descripción tipo Bien', valor: '', destino: ''},
+    { origen: 'Domicilio Bien', valor: '', destino: '' },
+    { origen: 'Código Postal', valor: '', destino: ''},
+    { origen: 'Localidad', valor: '', destino: ''},
+    { origen: 'Provincia', valor: '', destino: ''},
+    { origen: 'Referencia Catastral', valor: '', destino: ''},
+    { origen: 'Tipo Registro', valor: '', destino: '' },
+    { origen: 'Localidad Registro', valor: '', destino: ''},
+    { origen: 'Nº Registro', valor: '', destino: ''},
+    { origen: 'Nº Inscripcion', valor: '', destino: ''},
+    { origen: 'Tomo', valor: '', destino: '' },
+    { origen: 'Libro', valor: '', destino: ''},
+    { origen: 'Folio', valor: '', destino: '' },
+    { origen: 'Nº Finca', valor: '', destino: ''},
+    { origen: 'Tasadora actual', valor: '', destino: ''},
   ];
   
   columnasDestino = ['Encargo', 'Expediente', 'Acuerdo', 'Municipio', 'Provincia', 'IdBien', 'ReferenciaCatastral', 'TipoRegistro', 'Registro', 'Inscripcion', 'Finca', 'Tasadora'];  
@@ -81,8 +81,8 @@ export class ExcelImporterComponent implements OnInit {
   estiloMensaje: any = {};
   estiloMensajeLote: any = {};
 
-  selectedRowIndex: number [] = [];
-  selectedRowData: any [] = [];
+  selectedRowIndex: number | null = null;
+  selectedRowData: { [key: string]: string } | null = null;
 
   constructor(private historyService: HistoryService) {}
   
@@ -384,15 +384,15 @@ export class ExcelImporterComponent implements OnInit {
   } 
 
   onRowClick(index: number){
-    const isSelected = this.selectedRowIndex.includes(index);
-
-    if (isSelected) {
-    this.selectedRowIndex = this.selectedRowIndex.filter(item => item !== index);
-    this.selectedRowData = this.selectedRowData.filter((_, idx) => idx !== index);
+    if(this.selectedRowIndex === index){
+      this.selectedRowIndex = null;
+      this.selectedRowData = null;
     }else{
-      this.selectedRowIndex.push(index);
-      this.selectedRowData.push(this.excelData[index]);
+      this.selectedRowIndex = index;
+      this.selectedRowData = this.excelData[index];
     }
+
+    console.log('selectedRowData:', this.selectedRowData);
   }
 
   onBuscarAntecedentes() {
@@ -589,18 +589,18 @@ export class ExcelImporterComponent implements OnInit {
   }
 
   generarEncargo() {
-    if (this.selectedRowIndex.length === 1) {
-      
-      const filaSeleccionada = this.excelData[this.selectedRowIndex[0]];  
-  
-      const referenciaCatastral = filaSeleccionada[11];  
+    if (this.selectedRowIndex !== null) {
+     
+      const filaSeleccionada = this.excelData[this.selectedRowIndex];
+
+      const referenciaCatastral = filaSeleccionada[11];
+    
       const idBien = filaSeleccionada[4];
+
   
       this.procesarGeneracionEncargo(referenciaCatastral, idBien);
-    } else {
-      console.log('Por favor, selecciona exactamente una fila para generar el encargo.');
     }
-  }  
+  }
 
   procesarGeneracionEncargo(referenciaCatastral: string, idBien: string) {
     // Crear una nueva instancia de jsPDF

@@ -17,9 +17,11 @@
     <button class="boton" (click)="toggleVentana('registros')">
       Localizar registros
     </button>
+    <!--
     <button class="boton primary">
       Grabar Campos del Excel
     </button>
+    -->
     <button class="boton" (click)="onBuscarAntecedentes()">
       Búsqueda de antecedentes
     </button>
@@ -105,20 +107,27 @@
       <thead>
         <tr>
           <th>Origen</th>
+          <th>Valor</th>
           <th>Destino</th>
-          <th>Tipo</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let mapping of fieldMappings; let i = index">
           <td>{{ mapping.origen }}</td>
           <td>
+            <ng-container *ngIf="selectedRowData">
+              <span>{{ selectedRowData[i] || 'No Disponible' }}</span>                                          
+            </ng-container>
+            <ng-container *ngIf="!selectedRowData">
+              No Disponible
+            </ng-container>  
+          </td>
+          <td>
             <select [(ngModel)]="mapping.destino">
               <option value="">-- Omitir --</option>
               <option *ngFor="let col of columnasDestino" [value]="col">{{ col }}</option>
             </select>
           </td>
-          <td>{{ mapping.tipo }}</td>
         </tr>
       </tbody>
     </table>
@@ -147,8 +156,8 @@
   <div class="styles">
     <div class="table-container">
       <table *ngIf="excelData.length > 0">
-        <tr *ngFor="let row of excelData; let rowIndex = index"n (click)="onRowClick(rowIndex)" [class.selected-row]="selectedRowIndex.includes(rowIndex)">
-          <td *ngFor="let cell of row; let colIndex = index" contenteditable="true" (dblclick)="onCellEdit($event, rowIndex, colIndex)">
+        <tr *ngFor="let row of excelData; let rowIndex = index"n (click)="onRowClick(rowIndex)" [class.selected-row]="selectedRowIndex === rowIndex">
+          <td *ngFor="let cell of row; let colIndex = index" contenteditable="true" (blur)="onCellEdit($event, rowIndex, colIndex)">
            {{cell}}
           </td>
         </tr>
