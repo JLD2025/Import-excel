@@ -133,14 +133,6 @@ export class ExcelImporterComponent implements OnInit {
   
       const mensajeCompleto = dataMessage;
   
-      //const lineas = mensajeCompleto.split('<br/>');
-  
-      //const primerasLineas = lineas.slice(0, 3);
-  
-      //const ultimaLinea = lineas[lineas.length - 1];
-  
-      //const mensajeFinal = [...primerasLineas, ultimaLinea].join('<br/>');
-  
       this.mostrarLote(mensajeCompleto);
     }
   }   
@@ -352,15 +344,29 @@ export class ExcelImporterComponent implements OnInit {
   
   onDestinoChange(mapping: FieldMapping, index: number): void {
   
-    this.fieldMappings[index].destino = mapping.origen;
+    const currentDestino = this.fieldMappings[index].destino;
   
-   const selectedValue = this.selectedRowData ? this.selectedRowData[index] : undefined;
-
-    if (selectedValue !== undefined) {
-      this.fieldMappings[index].valor = selectedValue; 
-    } else {
-      this.fieldMappings[index].valor = 'No Disponible';
+    // Verificamos si el campo destino coincide con el origen, si no coincide, no actualizamos
+    if (currentDestino !== undefined && currentDestino !== mapping.origen) {
+        console.log('El destino no coincide con el origen, no se puede actualizar.');
+        return; // No se actualiza si el destino no coincide con el origen
     }
+
+    if (mapping.destino === mapping.origen) {
+      console.log('El destino no puede ser igual al origen. Cambio bloqueado.');
+    }
+
+      const selectedValue = this.selectedRowData ? this.selectedRowData[index] : undefined;
+
+      if (selectedValue !== undefined) {
+        this.fieldMappings[index].valor = selectedValue; 
+      } else {
+        this.fieldMappings[index].valor = 'No Disponible';
+      }
+
+      if (currentDestino !== mapping.origen) {
+        this.fieldMappings[index].destino = mapping.origen;
+      }
   
     this.mostrarLoteConDatosActualizados(mapping.destino);
   }  
@@ -409,7 +415,7 @@ export class ExcelImporterComponent implements OnInit {
       // Si el campo actual es el que se ha modificado, actualizamos su valor
       if (campo === campoModificado) {
         const valor = mapping && mapping.valor && mapping.valor !== 'No Disponible'
-          ? `<strong>campo</strong>: ${campo} ${mapping.valor}`
+          ? `campo: ${campo} ${mapping.valor}`
           : `campo: ${campo}`;
         return valor;
       }
@@ -424,7 +430,6 @@ export class ExcelImporterComponent implements OnInit {
   
     this.mostrarLote(updatedMessage);
   }
-  
 
   cerrarMensaje() {
     this.mensajeVisible = false;
