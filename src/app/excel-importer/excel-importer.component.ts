@@ -75,7 +75,20 @@ export class ExcelImporterComponent implements OnInit {
   ];
   
   columnasDestino = ['Encargo', 'Expediente', 'Acuerdo', 'Municipio', 'Provincia', 'IdBien', 'ReferenciaCatastral', 'TipoRegistro', 'Registro', 'Inscripcion', 'Finca', 'Tasadora'];  
+  // Definir el orden de los campos que deben mostrarse
+  ordenCampos = [
+    'ind', 'LoteId', 'Encargo', 'Expediente', 'Oficina', 'SuReferencia', 'Acuerdo',
+    'IdBien', 'ReferenciaCatastral', 'TipoBien', 'CodigoPostal', 'NomCalle', 'Municipio',
+    'Provincia', 'NomRegistroPropiedad', 'NumRegistroPropiedad', 'FincaStr', 'Idufir',
+    'Tomo', 'Libro', 'Folio', 'Inscripcion', 'ValorPrevisto', 'FechaValorPrevisto', 'TipoVisita',
+    'ContactoNombre', 'ContactoTelefono', 'ContactoEmail', 'ContactoObservacion', 'Delegacionid',
+    'Encargoid', 'Fecha', 'ExpeId', 'ClienteId', 'TipoBienId', 'MunicipioId', 'ProvinciaId',
+    'RegistroPropiedadId', 'claveExpeAnterior', 'fechaexpeanterior', 'copiado', 'FechaLimite',
+    'varios', 'Documentacion', 'Observacion', 'TipoValoracion', 'Prioridad', 'TipoFicha',
+    'TitularNif', 'SubclienteId', 'FechaEncargo', 'Entidad', 'NumActivo'
+  ];
 
+  
   estadoVentana: string | null = null;
   referenciaIngresado: string = "";
   idBien: number | null = null;
@@ -120,15 +133,15 @@ export class ExcelImporterComponent implements OnInit {
   
       const mensajeCompleto = dataMessage;
   
-      const lineas = mensajeCompleto.split('<br/>');
+      //const lineas = mensajeCompleto.split('<br/>');
   
-      const primerasLineas = lineas.slice(0, 3);
+      //const primerasLineas = lineas.slice(0, 3);
   
-      const ultimaLinea = lineas[lineas.length - 1];
+      //const ultimaLinea = lineas[lineas.length - 1];
   
-      const mensajeFinal = [...primerasLineas, ultimaLinea].join('<br/>');
+      //const mensajeFinal = [...primerasLineas, ultimaLinea].join('<br/>');
   
-      this.mostrarLote(mensajeFinal);
+      this.mostrarLote(mensajeCompleto);
     }
   }   
 
@@ -342,13 +355,14 @@ export class ExcelImporterComponent implements OnInit {
     this.fieldMappings[index].destino = mapping.origen;
   
    const selectedValue = this.selectedRowData ? this.selectedRowData[index] : undefined;
+
     if (selectedValue !== undefined) {
       this.fieldMappings[index].valor = selectedValue; 
     } else {
       this.fieldMappings[index].valor = 'No Disponible';
     }
   
-    this.mostrarLoteConDatosActualizados();
+    this.mostrarLoteConDatosActualizados(mapping.destino);
   }  
 
   mostrarLote(mensaje: string) {
@@ -386,18 +400,31 @@ export class ExcelImporterComponent implements OnInit {
     };    
   }
 
-  mostrarLoteConDatosActualizados(): void {
-    const updatedMessage = this.fieldMappings.map(mapping => {
-      // Solo se agrega el valor si el destino no es "Omitir"
-      const destinoValor = mapping.destino && mapping.destino !== "" && mapping.destino !== "-- Omitir --"
-        ? `campo: ${mapping.destino} ${mapping.valor}` // Si hay un destino, muestra el nombre de destino y su valor
-        : '';
-
-      return destinoValor;
-    }).filter(value => value !== '').join('<br/>');
-
+  mostrarLoteConDatosActualizados(campoModificado: string): void {
+    
+    const updatedMessage = this.ordenCampos.map(campo => {
+      // Verificar si el campo actual es el que se ha modificado
+      const mapping = this.fieldMappings.find(m => m.destino === campo);
+  
+      // Si el campo actual es el que se ha modificado, actualizamos su valor
+      if (campo === campoModificado) {
+        const valor = mapping && mapping.valor && mapping.valor !== 'No Disponible'
+          ? `campo: ${campo} ${mapping.valor}`
+          : `campo: ${campo}`;
+        return valor;
+      }
+  
+      // Si el campo no es el que se ha modificado, dejamos el valor actual (sin cambios)
+      const valorActual = mapping && mapping.valor && mapping.valor !== 'No Disponible'
+        ? `campo: ${campo} ${mapping.valor}`
+        : `campo: ${campo}`;
+  
+      return valorActual;
+    }).join('<br/>');
+  
     this.mostrarLote(updatedMessage);
   }
+  
 
   cerrarMensaje() {
     this.mensajeVisible = false;
