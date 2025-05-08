@@ -383,7 +383,7 @@ export class ExcelImporterComponent implements OnInit {
   
     this.estiloMensajeLote = {
       width: '300px',
-      height: '100px',
+      height: '210px',
       overflowX: 'auto',
       border: '1px solid black',
       background: 'white',
@@ -391,7 +391,7 @@ export class ExcelImporterComponent implements OnInit {
       paddingTop: '5px',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       position: 'fixed',
-      top: '140px', 
+      top: '80px', 
       left: '20px',
       borderRadius: '6px',
       zIndex: '999',
@@ -409,7 +409,7 @@ export class ExcelImporterComponent implements OnInit {
       // Si el campo actual es el que se ha modificado, actualizamos su valor
       if (campo === campoModificado) {
         const valor = mapping && mapping.valor && mapping.valor !== 'No Disponible'
-          ? `campo: ${campo} ${mapping.valor}`
+          ? `<strong>campo</strong>: ${campo} ${mapping.valor}`
           : `campo: ${campo}`;
         return valor;
       }

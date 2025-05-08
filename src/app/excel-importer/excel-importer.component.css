@@ -286,7 +286,11 @@ table {
     border: 1px solid #ccc;
     padding: 0.5rem;
     text-align: left;
-    width: 100px;
+}
+
+.field-mapping-table th:last-child,
+.field-mapping-table td:last-child {
+    width: 50px; 
 }
   
 .field-mapping-table select {
