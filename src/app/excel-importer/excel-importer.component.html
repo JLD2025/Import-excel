@@ -116,14 +116,14 @@
           <td>{{ mapping.origen }}</td>
           <td>
             <ng-container *ngIf="selectedRowData">
-              <span>{{ selectedRowData[i] || 'No Disponible' }}</span>                                          
+              <span>{{ selectedRowData[i] || 'No Disponible' }}</span>                                      
             </ng-container>
             <ng-container *ngIf="!selectedRowData">
               No Disponible
             </ng-container>  
           </td>
           <td>
-            <select [(ngModel)]="mapping.destino">
+            <select [(ngModel)]="mapping.destino" (change)="onDestinoChange(mapping, i)">
               <option value="">-- Omitir --</option>
               <option *ngFor="let col of columnasDestino" [value]="col">{{ col }}</option>
             </select>

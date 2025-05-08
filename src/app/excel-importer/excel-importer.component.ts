@@ -1,3 +1,9 @@
+export interface FieldMapping {
+  origen: string;
+  valor: string;
+  destino: string;
+}
+
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'
 import { CommonModule } from '@angular/common';
@@ -44,7 +50,7 @@ export class ExcelImporterComponent implements OnInit {
     'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'
   ];
 
-  fieldMappings = [
+  fieldMappings: FieldMapping[] = [
     { origen: 'Encargo', valor: '', destino: '' },
     { origen: 'Expediente', valor: '', destino: ''},
     { origen: 'S/Referencia', valor: '', destino: ''},
@@ -331,6 +337,20 @@ export class ExcelImporterComponent implements OnInit {
     };
   }
   
+  onDestinoChange(mapping: FieldMapping, index: number): void {
+  
+    this.fieldMappings[index].destino = mapping.origen;
+  
+   const selectedValue = this.selectedRowData ? this.selectedRowData[index] : undefined;
+    if (selectedValue !== undefined) {
+      this.fieldMappings[index].valor = selectedValue; 
+    } else {
+      this.fieldMappings[index].valor = 'No Disponible';
+    }
+  
+    this.mostrarLoteConDatosActualizados();
+  }  
+
   mostrarLote(mensaje: string) {
     this.mensajeLote = true;
     const encabezado = `✅ Conexión exitosa al siguiente lote: `;
@@ -364,6 +384,19 @@ export class ExcelImporterComponent implements OnInit {
       fontFamily: 'sans-serif',
       fontSize: 'small',
     };    
+  }
+
+  mostrarLoteConDatosActualizados(): void {
+    const updatedMessage = this.fieldMappings.map(mapping => {
+      // Solo se agrega el valor si el destino no es "Omitir"
+      const destinoValor = mapping.destino && mapping.destino !== "" && mapping.destino !== "-- Omitir --"
+        ? `campo: ${mapping.destino} ${mapping.valor}` // Si hay un destino, muestra el nombre de destino y su valor
+        : '';
+
+      return destinoValor;
+    }).filter(value => value !== '').join('<br/>');
+
+    this.mostrarLote(updatedMessage);
   }
 
   cerrarMensaje() {
