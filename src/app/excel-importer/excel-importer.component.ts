@@ -365,8 +365,10 @@ export class ExcelImporterComponent implements OnInit {
         this.fieldMappings[index].destino = mapping.origen;
     }
 
+    const mensajeLote = selectedValue === undefined ? currentOrigen : mapping.destino;
+
     // Llamamos a la función para mostrar los datos actualizados
-    this.mostrarLoteConDatosActualizados(mapping.destino);
+    this.mostrarLoteConDatosActualizados(mensajeLote);
   }
   
   mostrarLote(mensaje: string) {
