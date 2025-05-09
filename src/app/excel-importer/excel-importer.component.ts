@@ -270,8 +270,6 @@ export class ExcelImporterComponent implements OnInit {
         console.log('No se proporcionaron encabezados.');
     }
     
-    // Si los encabezados necesarios están presentes, revisar que los registros tengan valores válidos
-    // Si no hay errores previos, verificamos los campos faltantes en los registros
     if (!errores.length) {
       // Función para verificar campos vacíos en los registros
       const verificarCampo = (campo: string) => {
@@ -290,18 +288,15 @@ export class ExcelImporterComponent implements OnInit {
       });
     }
   
-    // Si existen errores, mostrarlos
     if (errores.length > 0) {
       this.mostrarErrores(errores);
       return false;
     }
   
-    // Si todo está correcto, mostrar mensaje de éxito
     this.mostrarMensaje('Todos los controles iniciales son correctos');
     return true;
   }
   
-  // Métodos para mostrar errores y mensajes
   mostrarErrores(errores: string[]) {
     const container = document.getElementById('error-container');
     const lista = document.getElementById('error-list');
@@ -437,7 +432,7 @@ export class ExcelImporterComponent implements OnInit {
         }
 
         // Si no coinciden, devolver el valor original
-        const valorActual = mapping && mapping.valor && mapping.valor !== 'No Disponible'
+        const valorActual = (mapping && mapping.valor && mapping.valor !== 'No Disponible' && mapping.destino !== '-- Origen --')
             ? `campo: ${mapping.valor}`
             : `campo: ${campo}`;
 
@@ -466,7 +461,7 @@ export class ExcelImporterComponent implements OnInit {
     }
   } 
 
-  onRowClick(index: number){
+  onRowClick(index: number): void{
     if(this.selectedRowIndex === index){
       this.selectedRowIndex = null;
       this.selectedRowData = null;
