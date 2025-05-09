@@ -105,7 +105,7 @@ export class ExcelImporterComponent implements OnInit {
   estiloMensajeLote: any = {};
 
   selectedRowIndex: number | null = null;
-  selectedRowData: { [key: string]: string } | null = null;
+  selectedRowData: string | null = null;
 
   constructor(private historyService: HistoryService) {}
   
@@ -472,7 +472,7 @@ export class ExcelImporterComponent implements OnInit {
 
     console.log('selectedRowData:', this.selectedRowData);
   }
-
+ 
   onBuscarAntecedentes() {
     const errores: string[] = [];
     if (!this.selectedRowData || Object.keys(this.selectedRowData).length === 0) {

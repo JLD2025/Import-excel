@@ -123,10 +123,12 @@
             </ng-container>  
           </td>
           <td>
-            <select [(ngModel)]="mapping.destino" (change)="onDestinoChange(mapping, i)">
-              <option value="">-- Omitir --</option>
-              <option *ngFor="let col of columnasDestino" [value]="col">{{ col }}</option>
-            </select>
+            <ng-container *ngIf="!ordenCampos.includes(mapping.origen)">
+              <select [(ngModel)]="mapping.destino" (change)="onDestinoChange(mapping, i)">
+                <option value="">-- Omitir --</option>
+                <option *ngFor="let col of columnasDestino" [value]="col">{{ col }}</option>
+              </select>
+            </ng-container>
           </td>
         </tr>
       </tbody>
