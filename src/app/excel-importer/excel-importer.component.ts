@@ -74,8 +74,13 @@ export class ExcelImporterComponent implements OnInit {
     { origen: 'Tasadora actual', valor: '', destino: ''},
   ];
   
-  columnasDestino = ['Encargo', 'Expediente', 'Acuerdo', 'Municipio', 'Provincia', 'IdBien', 'ReferenciaCatastral', 'TipoRegistro', 'Registro', 'Inscripcion', 'Finca', 'Tasadora'];  
-  // Definir el orden de los campos que deben mostrarse
+  columnasDestino = [
+    'Encargo', 'Expediente', 'SuReferencia', 
+    'Acuerdo', 'IdBien', 'TipoBien', 'CodigoPostal', 
+    'Municipio', 'Provincia', 'ReferenciaCatastral', 'Inscripcion',
+    'Tomo', 'Libro', 'Folio'
+  ];
+
   ordenCampos = [
     'ind', 'LoteId', 'Encargo', 'Expediente', 'Oficina', 'SuReferencia', 'Acuerdo',
     'IdBien', 'ReferenciaCatastral', 'TipoBien', 'CodigoPostal', 'NomCalle', 'Municipio',
@@ -88,7 +93,6 @@ export class ExcelImporterComponent implements OnInit {
     'TitularNif', 'SubclienteId', 'FechaEncargo', 'Entidad', 'NumActivo'
   ];
 
-  
   estadoVentana: string | null = null;
   referenciaIngresado: string = "";
   idBien: number | null = null;
@@ -345,32 +349,31 @@ export class ExcelImporterComponent implements OnInit {
   onDestinoChange(mapping: FieldMapping, index: number): void {
   
     const currentDestino = this.fieldMappings[index].destino;
+    const currentOrigen = mapping.origen;
   
-    // Verificamos si el campo destino coincide con el origen, si no coincide, no actualizamos
-    if (currentDestino !== undefined && currentDestino !== mapping.origen) {
-        console.log('El destino no coincide con el origen, no se puede actualizar.');
-        return; // No se actualiza si el destino no coincide con el origen
+    if (currentDestino.trim().slice(-3) !== currentOrigen.trim().slice(-3)) {
+        console.log('El destino no contiene el origen, no se puede actualizar.');
+        return;
     }
 
-    if (mapping.destino === mapping.origen) {
-      console.log('El destino no puede ser igual al origen. Cambio bloqueado.');
-    }
+    // Seleccionamos el valor de la fila si está disponible
+    const selectedValue = this.selectedRowData ? this.selectedRowData[index] : undefined;
 
-      const selectedValue = this.selectedRowData ? this.selectedRowData[index] : undefined;
-
-      if (selectedValue !== undefined) {
+    if (selectedValue !== undefined) {
         this.fieldMappings[index].valor = selectedValue; 
-      } else {
+    } else {
         this.fieldMappings[index].valor = 'No Disponible';
-      }
+    }
 
-      if (currentDestino !== mapping.origen) {
+    // Actualizamos el destino solo si el origen está presente en el destino
+    if (currentDestino !== mapping.origen) {
         this.fieldMappings[index].destino = mapping.origen;
-      }
-  
-    this.mostrarLoteConDatosActualizados(mapping.destino);
-  }  
+    }
 
+    // Llamamos a la función para mostrar los datos actualizados
+    this.mostrarLoteConDatosActualizados(mapping.destino);
+  }
+  
   mostrarLote(mensaje: string) {
     this.mensajeLote = true;
     const encabezado = `✅ Conexión exitosa al siguiente lote: `;
@@ -407,27 +410,42 @@ export class ExcelImporterComponent implements OnInit {
   }
 
   mostrarLoteConDatosActualizados(campoModificado: string): void {
-    
     const updatedMessage = this.ordenCampos.map(campo => {
-      // Verificar si el campo actual es el que se ha modificado
-      const mapping = this.fieldMappings.find(m => m.destino === campo);
-  
-      // Si el campo actual es el que se ha modificado, actualizamos su valor
-      if (campo === campoModificado) {
-        const valor = mapping && mapping.valor && mapping.valor !== 'No Disponible'
-          ? `campo: ${campo} ${mapping.valor}`
-          : `campo: ${campo}`;
-        return valor;
-      }
-  
-      // Si el campo no es el que se ha modificado, dejamos el valor actual (sin cambios)
-      const valorActual = mapping && mapping.valor && mapping.valor !== 'No Disponible'
-        ? `campo: ${campo} ${mapping.valor}`
-        : `campo: ${campo}`;
-  
-      return valorActual;
-    }).join('<br/>');
-  
+        // Encontrar el mapeo correspondiente en fieldMappings comparando las últimas 3 letras de destino
+        const mapping = this.fieldMappings.find(m => m.destino.slice(-3) === campo.slice(-3));
+
+        // Verificar si el mapping es encontrado correctamente
+        console.log(`Buscando campo: ${campo} en fieldMappings.`);
+        console.log(`mapping encontrado:`, mapping);
+
+        // Verificar las últimas tres letras
+        const campoModificadoSlice = campoModificado.slice(-3);
+        const campoSlice = campo.slice(-3);
+
+        console.log(`Comparando las últimas tres letras: campoModificadoSlice: ${campoModificadoSlice}, campoSlice: ${campoSlice}`);
+
+        if (campoModificadoSlice === campoSlice) {
+            console.log(`¡Coinciden las últimas tres letras! Actualizando el valor...`);
+
+            // Actualizar el valor solo si mapping y valor son válidos
+            const valor = mapping && mapping.valor && mapping.valor !== 'No Disponible'
+                ? `campo: ${mapping.valor}`  // Mostrar valor actualizado
+                : `campo: ${campo}`;  // Si no hay valor, mostrar el nombre del campo
+
+            console.log(`Valor actualizado para ${campo}: ${valor}`);
+            return valor;
+        }
+
+        // Si no coinciden, devolver el valor original
+        const valorActual = mapping && mapping.valor && mapping.valor !== 'No Disponible'
+            ? `campo: ${mapping.valor}`
+            : `campo: ${campo}`;
+
+        console.log(`Valor no actualizado para ${campo}: ${valorActual}`);
+        return valorActual;
+    }).join('<br/>');  // Concatenamos todos los valores
+
+    // Llamamos a la función para mostrar el lote actualizado
     this.mostrarLote(updatedMessage);
   }
 
