@@ -17,11 +17,6 @@
     <button class="boton" (click)="toggleVentana('registros')">
       Localizar registros
     </button>
-    <!--
-    <button class="boton primary">
-      Grabar Campos del Excel
-    </button>
-    -->
     <button class="boton" (click)="onBuscarAntecedentes()">
       Búsqueda de antecedentes
     </button>
@@ -150,7 +145,7 @@
   <input class="input_xlsx" type="file" (change)="onFileChange($event)" accept=".xls,.xlsx"/>
 
   <div id="error-container" class="error-container" style="display: none;">
-    <button id="close-btn" class="close-btn" onclick="cerrarErrores()">X</button>
+    <button id="close-btn" class="close-btn" (click)="cerrarErrores()">X</button>
     <strong>Errores encontrados:</strong>
     <ul id="error-list"></ul>
   </div>  

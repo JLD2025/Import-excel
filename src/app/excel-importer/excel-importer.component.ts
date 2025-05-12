@@ -316,7 +316,7 @@ export class ExcelImporterComponent implements OnInit {
     container.style.display = 'block';
 
     if (closeButton) {
-      closeButton.addEventListener('click', this.cerrarErrores);
+      closeButton.addEventListener('click', this.cerrarErrores.bind(this));
     }
   }
 
