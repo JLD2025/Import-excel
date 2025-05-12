@@ -144,11 +144,10 @@ export class ExcelImporterComponent implements OnInit {
   updateTime(){
     this.getCurrentDate();
     if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
-      window.requestAnimationFrame(() => this.updateTime()); // Llama de nuevo si estamos en un navegador
+      window.requestAnimationFrame(() => this.updateTime());
     }
   }
 
-  // Función para obtener la fecha y hora actuales
   getCurrentDate() {
     const ahora = new Date();
     this.currentDate = ahora.toLocaleString('es-ES');
@@ -165,7 +164,8 @@ export class ExcelImporterComponent implements OnInit {
       const arrayBuffer: ArrayBuffer = e.target.result;
       this.workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
-      this.sheetNames = this.workbook.SheetNames; //Esta parte sirve para obtener los nombres de las hojas por la cuál se compone un excel.
+      this.sheetNames = this.workbook.SheetNames; 
+      //Esta parte sirve para obtener los nombres de las hojas por la cuál se compone un excel.
 
        // Pedir al usuario el nombre de la hoja a cargar
        const sheetName = prompt("Selecciona el nombre de la hoja:", this.sheetNames.join(', '));
@@ -179,7 +179,6 @@ export class ExcelImporterComponent implements OnInit {
      
     };
 
-    // Cambié a 'readAsArrayBuffer'
     reader.readAsArrayBuffer(file);
   }
 
@@ -212,7 +211,6 @@ export class ExcelImporterComponent implements OnInit {
     }
   }
   
-
   loadDataFromExcelData(excelData: any[][]): void {
     const headers: string[] = excelData[0];
   
@@ -226,7 +224,6 @@ export class ExcelImporterComponent implements OnInit {
   
     console.log("Datos actualizados desde el Excel modificado:", this.datos);
   }
-  
 
   exportToExcel() {
     const worksheet = XLSX.utils.aoa_to_sheet(this.excelData);
@@ -238,7 +235,6 @@ export class ExcelImporterComponent implements OnInit {
     this.loadDataFromExcelData(this.excelData);
     this.cancelarBusqueda();
   }
-
 
   revisarControlesIniciales() {
     let errores: string[] = [];
@@ -408,25 +404,25 @@ export class ExcelImporterComponent implements OnInit {
 
   mostrarLoteConDatosActualizados(campoModificado: string): void {
     const updatedMessage = this.ordenCampos.map(campo => {
-        // Encontrar el mapeo correspondiente en fieldMappings comparando las últimas 3 letras de destino
-        const mapping = this.fieldMappings.find(m => m.destino.slice(-3) === campo.slice(-3));
+        // Buscar el mapeo correspondiente en fieldMappings comparando las últimas 3 letras de destino
+        const mappingDestino = this.fieldMappings.find(m => m.destino.slice(-3) === campo.slice(-3));
+        
+        // Buscar el mapeo correspondiente en fieldMappings comparando las últimas 3 letras de origen cuando el destino está vacío
+        const mappingOrigenVacío = this.fieldMappings.find(m => m.origen === campo && (!m.destino));
 
-        // Verificar si el mapping es encontrado correctamente
-        console.log(`Buscando campo: ${campo} en fieldMappings.`);
-        console.log(`mapping encontrado:`, mapping);
+        console.log('campoModificado:', campoModificado);
+        console.log('mappingDestino:', mappingDestino);
+        console.log('mappingOrigenVacío:', mappingOrigenVacío);
 
         // Verificar las últimas tres letras
         const campoModificadoSlice = campoModificado.slice(-3);
         const campoSlice = campo.slice(-3);
 
-        console.log(`Comparando las últimas tres letras: campoModificadoSlice: ${campoModificadoSlice}, campoSlice: ${campoSlice}`);
-
+        // Actualizar el valor si las últimas tres letras coinciden en el mapeo destino
         if (campoModificadoSlice === campoSlice) {
             console.log(`¡Coinciden las últimas tres letras! Actualizando el valor...`);
-
-            // Actualizar el valor solo si mapping y valor son válidos
-            const valor = mapping && mapping.valor && mapping.valor !== 'No Disponible'
-                ? `campo: ${mapping.valor}`  // Mostrar valor actualizado
+            const valor = mappingDestino && mappingDestino.valor && mappingDestino.valor !== 'No Disponible'
+                ? `campo: ${mappingDestino.valor}`  // Mostrar valor actualizado
                 : `campo: ${campo}`;  // Si no hay valor, mostrar el nombre del campo
 
             console.log(`Valor actualizado para ${campo}: ${valor}`);
@@ -434,15 +430,21 @@ export class ExcelImporterComponent implements OnInit {
         }
 
         // Si no coinciden, devolver el valor original
-        const valorActual = (mapping && mapping.valor && mapping.valor !== 'No Disponible' && mapping.destino !== '-- Origen --')
-            ? `campo: ${mapping.valor}`
+        const valorActual = (mappingDestino && mappingDestino.valor && mappingDestino.valor !== 'No Disponible' && mappingDestino.destino !== '-- Origen --')
+            ? `campo: ${mappingDestino.valor}`
             : `campo: ${campo}`;
 
         console.log(`Valor no actualizado para ${campo}: ${valorActual}`);
-        return valorActual;
-    }).join('<br/>');  // Concatenamos todos los valores
 
-    // Llamamos a la función para mostrar el lote actualizado
+        // Si el destino está vacío, hacer la comparación con el origen
+        if (mappingOrigenVacío) {
+            console.log(`Se encontró un mapeo con origen vacío. Comparando origen: ${campo} con origen mapeado: ${mappingOrigenVacío.origen}`);
+            return `campo: ${mappingOrigenVacío.valor}`;
+        }
+
+        return valorActual;
+    }).join('<br/>');
+
     this.mostrarLote(updatedMessage);
   }
 
@@ -472,7 +474,23 @@ export class ExcelImporterComponent implements OnInit {
       this.selectedRowData = this.excelData[index];
     }
 
+    this.asignarValoresAFIELDMappings(this.selectedRowData);
+
+    this.mostrarLoteConDatosActualizados(this.selectedRowData || '');
+
     console.log('selectedRowData:', this.selectedRowData);
+  }
+
+  asignarValoresAFIELDMappings(selectedRowData: any): void {
+      // Recorremos los fieldMappings y asignamos los valores correspondientes de selectedRowData
+      this.fieldMappings.forEach((mapping, index) => {
+          if (selectedRowData[index]) {
+              mapping.valor = selectedRowData[index];
+          }
+      });
+
+      // Verifica los valores asignados
+      console.log('fieldMappings actualizados:', this.fieldMappings);
   }
  
   onBuscarAntecedentes() {
@@ -551,19 +569,19 @@ export class ExcelImporterComponent implements OnInit {
       return `Fila ${index}: Tipo Registro: ${tipoRegistro}, Localidad Registro: ${localidadRegistro}, Nº Registro: ${numeroRegistro}`;
     });
     
-    let tablaHtml = `
-    <table border="1" cellspacing="0" cellpadding="1">
-      <tr>
-        <th>Nombre</th>
-      </tr>
-      ${coincidenciasDetalles.map(detalle => {
-        const [nombre] = detalle.split('|').map(x => x.trim());
-        return `<tr><td>${nombre}</td></tr>`;
-      }).join('')}
-    </table>
-  `;
+      let tablaHtml = `
+      <table border="1" cellspacing="0" cellpadding="1">
+        <tr>
+          <th>Nombre</th>
+        </tr>
+        ${coincidenciasDetalles.map(detalle => {
+          const [nombre] = detalle.split('|').map(x => x.trim());
+          return `<tr><td>${nombre}</td></tr>`;
+        }).join('')}
+      </table>
+    `;
 
-  this.mostrarMensaje(`Coincidencias encontradas:<br>${tablaHtml}`);
+    this.mostrarMensaje(`Coincidencias encontradas:<br>${tablaHtml}`);
   
   }
 
@@ -634,7 +652,6 @@ export class ExcelImporterComponent implements OnInit {
     if(this.idBien !== null){
       const bien = this.idBien;
   
-      // Buscar en excelData
       const filasCoincidentes: number[] = [];
       this.excelData.forEach((fila, index) => {
         const contieneBien = fila.some((celda : any) => celda?.toString().toLowerCase().includes(bien));
