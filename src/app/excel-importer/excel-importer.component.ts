@@ -339,10 +339,14 @@ export class ExcelImporterComponent implements OnInit {
   
   onDestinoChange(mapping: FieldMapping, index: number): void {
   
-    const currentDestino = this.fieldMappings[index].destino;
+    const currentDestino = this.fieldMappings[index].destino.trim();
     const currentOrigen = mapping.origen;
+
+     console.log('Primeros 5 caracteres de currentDestino:', currentDestino);
+     console.log('ordenCampos:', this.ordenCampos);
   
-    if (currentDestino.trim().slice(-3) !== currentOrigen.trim().slice(-3)) {
+    if (!this.ordenCampos.includes(currentDestino)) {
+        console.log(currentDestino + ', ' + currentOrigen);
         console.log('El destino no contiene el origen, no se puede actualizar.');
         return;
     }
@@ -356,12 +360,14 @@ export class ExcelImporterComponent implements OnInit {
         this.fieldMappings[index].valor = 'No Disponible';
     }
 
+    const originalDestino = currentDestino;
+
     // Actualizamos el destino solo si el origen está presente en el destino
     if (currentDestino !== mapping.origen) {
         this.fieldMappings[index].destino = mapping.origen;
     }
 
-    const mensajeLote = selectedValue === undefined ? currentOrigen : mapping.destino;
+    const mensajeLote = selectedValue === undefined ? currentOrigen : originalDestino;
 
     // Llamamos a la función para mostrar los datos actualizados
     this.mostrarLoteConDatosActualizados(mensajeLote);
@@ -404,8 +410,10 @@ export class ExcelImporterComponent implements OnInit {
 
   mostrarLoteConDatosActualizados(campoModificado: string): void {
     const updatedMessage = this.ordenCampos.map(campo => {
-        // Buscar el mapeo correspondiente en fieldMappings comparando las últimas 3 letras de destino
-        const mappingDestino = this.fieldMappings.find(m => m.destino.slice(-3) === campo.slice(-3));
+        
+        const mappingDestino = this.fieldMappings.find(m => m.destino.startsWith(campo[0]) && 
+        m.destino.endsWith(campo.slice(-3)) ||
+        m.destino.includes(campo));
         
         // Buscar el mapeo correspondiente en fieldMappings comparando las últimas 3 letras de origen cuando el destino está vacío
         const mappingOrigenVacío = this.fieldMappings.find(m => m.origen === campo && (!m.destino));
@@ -414,13 +422,7 @@ export class ExcelImporterComponent implements OnInit {
         console.log('mappingDestino:', mappingDestino);
         console.log('mappingOrigenVacío:', mappingOrigenVacío);
 
-        // Verificar las últimas tres letras
-        const campoModificadoSlice = campoModificado.slice(-3);
-        const campoSlice = campo.slice(-3);
-
-        // Actualizar el valor si las últimas tres letras coinciden en el mapeo destino
-        if (campoModificadoSlice === campoSlice) {
-            console.log(`¡Coinciden las últimas tres letras! Actualizando el valor...`);
+        if (campoModificado === campo) {
             const valor = mappingDestino && mappingDestino.valor && mappingDestino.valor !== 'No Disponible'
                 ? `campo: ${mappingDestino.valor}`  // Mostrar valor actualizado
                 : `campo: ${campo}`;  // Si no hay valor, mostrar el nombre del campo
