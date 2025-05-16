@@ -406,6 +406,12 @@ export class ExcelImporterComponent implements OnInit {
       fontFamily: 'sans-serif',
       fontSize: 'small',
     };    
+
+    // Mostrar el mensaje en la consola
+    console.log(encabezado);
+    mensaje.split("<br/>").forEach(line => {
+      console.log(line.trim());  // Imprime cada línea sin espacios adicionales
+    });
   }
 
   mostrarLoteConDatosActualizados(campoModificado: string): void {
