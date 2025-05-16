@@ -341,9 +341,6 @@ export class ExcelImporterComponent implements OnInit {
   
     const currentDestino = this.fieldMappings[index].destino.trim();
     const currentOrigen = mapping.origen;
-
-     console.log('Primeros 5 caracteres de currentDestino:', currentDestino);
-     console.log('ordenCampos:', this.ordenCampos);
   
     if (!this.ordenCampos.includes(currentDestino)) {
         console.log(currentDestino + ', ' + currentOrigen);
@@ -362,9 +359,9 @@ export class ExcelImporterComponent implements OnInit {
 
     const originalDestino = currentDestino;
 
-    // Actualizamos el destino solo si el origen está presente en el destino
     if (currentDestino !== mapping.origen) {
-        this.fieldMappings[index].destino = mapping.origen;
+        const transformedDestino: string = this.transformarYMapear(currentOrigen, currentDestino);
+        this.fieldMappings[index].destino = transformedDestino;
     }
 
     const mensajeLote = selectedValue === undefined ? currentOrigen : originalDestino;
@@ -372,7 +369,30 @@ export class ExcelImporterComponent implements OnInit {
     // Llamamos a la función para mostrar los datos actualizados
     this.mostrarLoteConDatosActualizados(mensajeLote);
   }
-  
+
+  transformarYMapear(origen: string, destino: string): string {
+      let normalizedOrigen: string[] = origen
+          .toLowerCase()
+          .split(' ')
+          .filter((word: string) => word.length > 0);
+
+      let normalizedDestino: string[] = destino
+          .toLowerCase()
+          .split(' ')
+          .filter((word: string) => word.length > 0);
+
+      let palabrasComunes: string[] = normalizedOrigen.filter((word: string) => normalizedDestino.includes(word));
+
+      if (palabrasComunes.length > 0) {
+          let nuevoDestino: string = palabrasComunes
+              .map((palabra: string) => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+              .join('');
+          return nuevoDestino;
+      }
+
+      return destino;
+  }
+
   mostrarLote(mensaje: string) {
     this.mensajeLote = true;
     const encabezado = `✅ Conexión exitosa al siguiente lote: `;
