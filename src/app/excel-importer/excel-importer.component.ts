@@ -348,7 +348,6 @@ export class ExcelImporterComponent implements OnInit {
         return;
     }
 
-    // Seleccionamos el valor de la fila si está disponible
     const selectedValue = this.selectedRowData ? this.selectedRowData[index] : undefined;
 
     if (selectedValue !== undefined) {
@@ -366,7 +365,6 @@ export class ExcelImporterComponent implements OnInit {
 
     const mensajeLote = selectedValue === undefined ? currentOrigen : originalDestino;
 
-    // Llamamos a la función para mostrar los datos actualizados
     this.mostrarLoteConDatosActualizados(mensajeLote);
   }
 
